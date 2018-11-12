@@ -9,6 +9,7 @@ class SongList{
     constructor(){
         this.list = [];
         this.selectedSongIndex = -1;
+        this.selectedPage = 0;
     }
     
     init(){
