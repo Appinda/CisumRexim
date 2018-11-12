@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/plugins/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="/src/app.css" rel="stylesheet" />
+</head>
+<body class="noselect">
+
+    <!-- Playbar -->
+    <div class="container-fluid" id="playbar" style="z-index: 1;">
+		<div class="row" id="contolbar">
+			<div class="col-5 text-center highlight" onclick="audioControls.prevSong();">
+				<i class="material-icons">navigate_before</i>
+			</div>
+			<div class="col-2 text-center">
+				<span id="currentSongInfo"></span>
+			</div>
+			<div class="col-5 text-center highlight" onclick="audioControls.nextSong();">
+				<i class="material-icons">navigate_next</i>
+			</div>
+		</div>
+        <div class="row">
+            <div class="col-2">
+                <!-- Controls -->
+                <div class="row" style="height: 100%;">
+                    <div class="col-md-auto">
+						<i class="material-icons controlbtn" title="Stop and close song" id="btn_close" onclick="audioControls.close()">close</i>
+                        <i class="material-icons controlbtn stopped" id="btn_play" onclick="audioControls.playpause()">play_circle_filled</i>
+                        <i class="material-icons controlbtn" title="Stop" id="btn_stop" onclick="audioControls.stop()">stop</i>
+                    </div>
+                    <div class="col">
+                        <div class="row align-items-center" style="height: 50%;">
+                            <div class="col">
+                                <i class="material-icons controlbtn small" title="From beginning">fast_rewind</i>
+                            </div>
+                        </div>
+                        <div class="row align-items-center" style="height: 50%;">
+                            <div class="col">
+                                <i class="material-icons controlbtn small" title="Loop" onclick="audioControls.loop()">loop</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9" style="border-right: 1px solid #ccc">
+                <!-- Timeline -->
+				<div id="waveform">
+					<div class="indicator" style="display: none;"></div>
+					<div class="back"></div>
+					<div class="fill"></div>
+					<div class="cursor"></div>
+					<div class="timer">00:00 / 00:00 (0%)</div>
+					<div class="wrapper"></div>
+				</div>
+            </div>
+			<div class="col-1">
+				<p id="volumeText">75%</p>
+				<input id="volume" type="range" min="0" max="100" value="75" onchange="audioControls.setVolume(this.value)">
+			</div>
+        </div>
+    </div>
+
+	<!-- Page -->
+    <div class="container-fluid" style="margin-top: 1rem;" id="page">
+		<!-- Row 1-->
+        <div class="row">
+            <!--<div class="col-4"><div class="card"><div class="card-body"><span>1</span><h5 class="card-title">Pray for me</h5><h6 class="card-subtitle mb-2 text-muted">1.mp3</h6><p class="card-text">01:15 seconds</p></div></div></div>-->
+			<div class="col-4" name="placeholder_0">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-4" name="placeholder_1">
+				<div class="card empty" ondrop="page.dropAt(event, 2);" ondragover="page.dragOver(event);" ondragenter="page.dragEnter(event);">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-4" name="placeholder_2">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+        </div>
+		<br />
+		<!-- Row 2-->
+		<div class="row">
+			<div class="col-4" name="placeholder_3">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-4" name="placeholder_4">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-4" name="placeholder_5">
+				<div class="card empty" >
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+		<!-- Row 3-->
+		<div class="row">
+			<div class="col-4" name="placeholder_6">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-4" name="placeholder_7">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-4" name="placeholder_8">
+				<div class="card empty">
+					<div class="card-body">
+						<span>Drop audio file</span>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+
+    <!-- Final Execute script -->
+    <script src="/src/plugins/jquery-3.3.1.min.js"></script>
+    <script src="/src/plugins/jquery.transit.min.js"></script>
+    <script src="/src/plugins/popper.min.js"></script>
+    <script src="/src/plugins/bootstrap.min.js"></script>
+    <script src="/src/plugins/socket.io.slim.js"></script>
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/wavesurfer.js/2.0.5/wavesurfer.min.js"></script>-->
+	<script src="/src/plugins/buzz.min.js" type="text/javascript"></script>
+	<script src="/src/plugins/mousetrap.min.js" type="text/javascript"></script>
+    <script src="/src/app.js" type="text/javascript"></script>
+
+</body>
+</html>
