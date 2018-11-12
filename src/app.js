@@ -47,22 +47,27 @@ class SongList{
         // Empty each placeholder
         this.empty();
         // Place songs from songlist
-        let index = this.selectedPage * 9;
-        let targetsongs = songlist.list.slice(index, index + 9);
+        let range = this.selectedPage * 9;
+        let targetsongs = songlist.list.slice(range, range + 9);
         for (var i = 0, song; song = targetsongs[i]; i++) {
             $("#page div.col-4[name=placeholder_" + i + "]").html(`<div class="card song"><div class="card-body" onclick="songlist.selectPlaceholder(${i});"><span>${i + 1}</span><h5 class="card-title">${'name'}</h5><h6 class="card-subtitle mb-2 text-muted">${song.file.name}</h6><p class="card-text">${'duration'}</p></div></div>`);   
         }
+        // Update # page text
         $('#page #pagebar #currentPage').text(`${this.selectedPage + 1} / ${this.pagecount}`);
+        // Select song
+        if(this.selectedSongIndex >= range && this.selectedSongIndex < range + 9) $(`#page div.col-4[name=placeholder_${this.selectedSongIndex % 9}] .card`).addClass('selected');
     }
     selectSong(index){
-        // If aleady selected, return
         if(index < 0) index = songlist.list.length - 1;
         if(index == songlist.list.length) index = 0; 
+        // If aleady selected, return
         if(this.selectedSongIndex == index) return false;
         $(`${Playbar.id} #currentSongInfo`).html(`<b>${songlist.list[index].file.name}</b> (${songlist.list[index].file.name})`);
         this.stop();
         Playbar.show();
         Playbar.graph.load(songlist.list[index].url);
+        //if(this.selectedSongIndex % 9 == 8 && (index == this.selectedSongIndex + 1 || this.selectedSongIndex + 1 == this.list.length)) this.nextPage();
+        //else if(this.selectedSongIndex % 9 == 0 && (index == this.selectedSongIndex - 1 || this.selectedSongIndex == 0)) this.nextPage();
         if(index >= (this.selectedPage + 1) * 9) this.nextPage();
         if(index < this.selectedPage * 9) this.prevPage();
         $(`#page div.col-4[name=placeholder_${this.selectedSongIndex}] .card`).removeClass('selected');
