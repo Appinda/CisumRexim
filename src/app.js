@@ -55,6 +55,9 @@ class SongList{
         $("#page div.col-4[name=placeholder_" + index + "] .card").addClass('selected');
         this.selectedSongIndex = index;
     }
+    selectPlaceholder(index){
+        if(index < 0 || index > 9) throw Error(`Placeholder ${index} does not exist!`);
+    }
     play(){
         $("#btn_play").text("pause_circle_filled");
         $("#btn_play").removeClass("stopped").removeClass("paused").addClass("playing");
@@ -177,25 +180,36 @@ class Playbar{
     
     static setupKeys(){
         this.keybindings = {
-            'NumpadEnter': 'playpause',
-            'NumpaddAdd': 'stop',
-            'ArrowUp': 'pageUp',
-            'ArrowDown': 'pageDown',
-            'ArrowLeft': 'prevSong',
-            'ArrowRight': 'nextSong',
-            'Numpad7': 'Placeholder1',
-            'Numpad8': 'Placeholder2',
-            'Numpad9': 'Placeholder3',
-            'Numpad4': 'Placeholder4',
-            'Numpad5': 'Placeholder5',
-            'Numpad6': 'Placeholder6',
-            'Numpad1': 'Placeholder7',
-            'Numpad2': 'Placeholder8',
-            'Numpad3': 'Placeholder9'
+            'playpause': {key: 'NumpadEnter', event: `songlist.playpause()`},
+            'stop': {key: 'NumpadAdd', event: `songlist.stop()`},
+            'pageUp': {key: 'ArrowUp', event: ``},
+            'pageDown': {key: 'ArrowDown', event: ``},
+            'prevSong': {key: 'ArrowLeft', event: `songlist.prev()`},
+            'nextSong': {key: 'ArrowRight', event: `songlist.next()`},
+            'Placeholder1': {key: 'Numpad7', event: `songlist.selectPlaceholder(7)`},
+            'Placeholder2': {key: 'Numpad8', event: `songlist.selectPlaceholder(8)`},
+            'Placeholder3': {key: 'Numpad9', event: `songlist.selectPlaceholder(9)`},
+            'Placeholder4': {key: 'Numpad4', event: `songlist.selectPlaceholder(4)`},
+            'Placeholder5': {key: 'Numpad5', event: `songlist.selectPlaceholder(5)`},
+            'Placeholder6': {key: 'Numpad6', event: `songlist.selectPlaceholder(6)`},
+            'Placeholder7': {key: 'Numpad1', event: `songlist.selectPlaceholder(1)`},
+            'Placeholder8': {key: 'Numpad2', event: `songlist.selectPlaceholder(2)`},
+            'Placeholder9': {key: 'Numpad3', event: `songlist.selectPlaceholder(3)`}
         }
         $('body').keyup(function(e) {
-          console.log(e.char);
+          Playbar.keyPress(e.originalEvent.code);
         });
+    }
+    static keyPress(key){
+        for(let name in this.keybindings){
+            if(key == this.keybindings[name]['key']){
+                eval(this.keybindings[name]['event']);
+                return true;
+            }
+        }
+        console.log(key);
+        return false;
+        
     }
 }
 
