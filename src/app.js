@@ -11,6 +11,7 @@ class SongList{
         this.selectedSongIndex = -1;
         this.selectedPage = 0;
         this.pagecount = 1;
+        this.disabled = false;
     }
     
     init(){
@@ -67,8 +68,10 @@ class SongList{
         $(`#page div.col-4[name=placeholder_${this.selectedSongIndex}] .card`).removeClass('selected');
         $(`#page div.col-4[name=placeholder_${index % 9}] .card`).addClass('selected');
         this.selectedSongIndex = index;
+        Playbar.updateButtonState(false);
     }
     selectPage(page){
+        if(this.pagecount == 1) return false;
         if(page < 0) this.selectedPage = this.pagecount - 1;
         else if(page > this.pagecount - 1) this.selectedPage = 0;
         else this.selectedPage = page;
@@ -79,30 +82,39 @@ class SongList{
         this.selectSong(index + (9 * this.selectedPage));
     }
     play(){
+        if(this.disabled) return false;
         $("#btn_play").text("pause_circle_filled");
         $("#btn_play").removeClass("stopped").removeClass("paused").addClass("playing");
         Playbar.graph.play();
     }
     playpause(){
+        if(this.disabled) return false;
         console.log('playpause');
         if(Playbar.graph.isPlaying()) this.pause();
         else this.play();
             
     }
     stop(){
+        if(this.disabled) return false;
         $("#btn_play").text("play_circle_filled");
 		$("#btn_play").removeClass("playing").removeClass("paused").addClass("stopped");
         Playbar.graph.stop();
         Playbar.updateTime();
     }
     pause(){
+        if(this.disabled) return false;
         $("#btn_play").text("play_circle_filled");
         $("#btn_play").removeClass("playing").addClass("paused");
         Playbar.graph.pause();
     }
     setVolume(vol){
         Playbar.graph.setVolume(vol/100);
-        $('#volumeText').text(vol+'%')
+        let icon = "";
+        if(vol == 0) icon = 'volume_off';
+        if(vol > 0) icon = 'volume_mute';
+        if(vol > 49) icon = 'volume_down';
+        if(vol > 74) icon = 'volume_up';
+        $('#volumeText').html(`<i class="material-icons">${icon}</i>&nbsp;${vol}%`);
     }
     nextSong(){
         this.selectSong(this.selectedSongIndex + 1);
@@ -157,6 +169,7 @@ class Playbar{
         this.graph.autoplay = false;
         this.graph.loop = false;
         this.graph.on('ready', function () {
+            Playbar.updateButtonState(true);
             if(Playbar.graph.autoplay) songlist.play();
             Playbar.updateTime();
         });
@@ -170,7 +183,7 @@ class Playbar{
             if(Playbar.graph.loop){
                 songlist.play();
             }else{
-                songlist.next();   
+                songlist.nextSong();   
             }
         });
         
@@ -186,6 +199,20 @@ class Playbar{
         if (!this.visible) return false;
 		$(this.id).transition({ y: '300px' }, time, easing);
 		this.visible = false;
+    }
+    
+    static updateButtonState(state){
+        if(state){
+            // Enabled
+            $('#playbar #btn_play').removeClass('disabled');
+            $('#playbar #btn_stop').removeClass('disabled');
+            songlist.disabled = false;
+        }else{
+            // Disabled
+            $('#playbar #btn_play').addClass('disabled');
+            $('#playbar #btn_stop').addClass('disabled');
+            songlist.disabled = true;
+        }
     }
     
     static updateTime(set){
