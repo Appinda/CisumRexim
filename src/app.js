@@ -33,15 +33,22 @@ class SongList{
     delete(position){
         return this.list.splice(position, 1);
     }
-    update(){
-        // Empty each placeholder
+    empty(){
         for(let s = 0; s < 9; s++){
             $("#page div.col-4[name=placeholder_" + s + "]").html(`<div class="card empty"><div class="card-body" onclick="songlist.selectFiles();"><span>${emptyCardText}</span></div></div>`);   
         }
+    }
+    update(){
+        // Empty each placeholder
+        this.empty();
         // Place songs from songlist
-        for (var i = 0, song; song = songlist.list[i]; i++) {
+        let index = this.selectedPage * 9;
+        let targetsongs = songlist.list.slice(index, index + 9);
+        for (var i = 0, song; song = targetsongs[i]; i++) {
             $("#page div.col-4[name=placeholder_" + i + "]").html(`<div class="card song"><div class="card-body" onclick="songlist.selectSong(${i});"><span>${i + 1}</span><h5 class="card-title">${'name'}</h5><h6 class="card-subtitle mb-2 text-muted">${song.file.name}</h6><p class="card-text">${'duration'}</p></div></div>`);   
         }
+        let pagecount = Math.ceil(this.list.length / 9);
+        $('#page #pagebar #currentPage').text(`${this.selectedPage + 1} / ${pagecount}`);
     }
     selectSong(index){
         // If aleady selected, return
@@ -56,8 +63,16 @@ class SongList{
         $("#page div.col-4[name=placeholder_" + index + "] .card").addClass('selected');
         this.selectedSongIndex = index;
     }
+    selectPage(page){
+        let pagecount = Math.ceil(this.list.length / 9);
+        if(pagecount == 0) pagecount = 1;
+        if(page < 0) this.selectedPage = pagecount - 1;
+        else if(page > pagecount - 1) this.selectedPage = 0;
+        else this.selectedPage = page;
+        this.update();
+    }
     selectPlaceholder(index){
-        if(index < 0 || index > 9) throw Error(`Placeholder ${index} does not exist!`);
+        if(index < 0 || index > 9) return false;
     }
     play(){
         $("#btn_play").text("pause_circle_filled");
@@ -85,10 +100,10 @@ class SongList{
         Playbar.graph.setVolume(vol/100);
         $('#volumeText').text(vol+'%')
     }
-    next(){
+    nextSong(){
         this.selectSong(this.selectedSongIndex + 1);
     }
-    prev(){
+    prevSong(){
         this.selectSong(this.selectedSongIndex - 1);
     }
     toggleLoop(){
@@ -100,6 +115,12 @@ class SongList{
         if(Playbar.graph.autoplay) $(`${Playbar.id} .controlbtn#autoplay`).removeClass('selected');
         else $(`${Playbar.id} .controlbtn#autoplay`).addClass('selected');
         Playbar.graph.autoplay = !Playbar.graph.autoplay; 
+    }
+    nextPage(){
+        this.selectPage(this.selectedPage + 1);
+    }
+    prevPage(){
+        this.selectPage(this.selectedPage - 1);
     }
 }
 
@@ -183,10 +204,10 @@ class Playbar{
         this.keybindings = {
             'playpause': {key: 'NumpadEnter', event: `songlist.playpause()`},
             'stop': {key: 'NumpadAdd', event: `songlist.stop()`},
-            'pageUp': {key: 'ArrowUp', event: ``},
-            'pageDown': {key: 'ArrowDown', event: ``},
-            'prevSong': {key: 'ArrowLeft', event: `songlist.prev()`},
-            'nextSong': {key: 'ArrowRight', event: `songlist.next()`},
+            'pageUp': {key: 'ArrowUp', event: `songlist.nextPage()`},
+            'pageDown': {key: 'ArrowDown', event: `songlist.prevPage()`},
+            'prevSong': {key: 'ArrowLeft', event: `songlist.prevSong()`},
+            'nextSong': {key: 'ArrowRight', event: `songlist.nextSong()`},
             'Placeholder1': {key: 'Numpad7', event: `songlist.selectPlaceholder(7)`},
             'Placeholder2': {key: 'Numpad8', event: `songlist.selectPlaceholder(8)`},
             'Placeholder3': {key: 'Numpad9', event: `songlist.selectPlaceholder(9)`},

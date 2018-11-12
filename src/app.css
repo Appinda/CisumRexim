@@ -130,6 +130,7 @@ body{
 	font-weight: bold;
 	vertical-align: bottom;
 }
+
 #waveform .timer{
 	position: absolute;
 	left: 0%;
@@ -208,4 +209,29 @@ body{
 
 #page .card.empty.drag{
 	border: 1px dashed black;
+}
+
+#page #pagebar{
+	margin-bottom: 10px;
+	transition: all 0.2s ease;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 1rem;
+}
+#page #pagebar div{
+	transition: all 0.5s ease;
+	height: 100%;
+	padding: 5px;
+}
+#page #pagebar div:not(:nth-child(2)){
+    border-radius: 1rem;
+    background-color: #d4d4d4; 
+}
+#page #pagebar div.highlight:hover{
+	background-color: #999;
+}
+#page #pagebar i{
+	font-size: 26px;
+	font-weight: bold;
+	vertical-align: bottom;
 }

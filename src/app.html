@@ -20,13 +20,13 @@
     <!-- Playbar -->
     <div class="container-fluid" id="playbar" style="z-index: 1;">
 		<div class="row" id="contolbar">
-			<div class="col-5 text-center highlight" onclick="songlist.prev();">
+			<div class="col-5 text-center highlight" onclick="songlist.prevSong();">
 				<i class="material-icons">navigate_before</i>
 			</div>
 			<div class="col-2 text-center">
 				<span id="currentSongInfo"></span>
 			</div>
-			<div class="col-5 text-center highlight" onclick="songlist.next();">
+			<div class="col-5 text-center highlight" onclick="songlist.nextSong();">
 				<i class="material-icons">navigate_next</i>
 			</div>
 		</div>
@@ -141,6 +141,17 @@
 						<span></span>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row" id="pagebar">
+			<div class="col-1 text-center highlight" onclick="songlist.prevPage();">
+				<i class="material-icons">navigate_before</i>
+			</div>
+			<div class="col-10 text-center">
+				<span id="currentPage">1 / 1</span>
+			</div>
+			<div class="col-1 text-center highlight" onclick="songlist.nextPage();">
+				<i class="material-icons">navigate_next</i>
 			</div>
 		</div>
     </div>
