@@ -12,11 +12,21 @@ class SongList{
         this.selectedPage = 0;
         this.pagecount = 1;
         this.disabled = false;
+        this.keylisten = true;
     }
     
     init(){
         $('.card.empty span').text(emptyCardText);
         $('#filebrowser').change(songlist.processFiles);
+        
+        //Right click
+        for(let s = 0; s < 9; s++){
+            $("#page div.col-4[name=placeholder_" + s + "]").contextmenu(function(){
+                let placeholder = $(this).attr('name')
+                let filename = $("#page div.col-4[name=" + $(this).attr('name') + "] h6").text();
+                songlist.rightclick(event, filename, placeholder);
+            });
+        }
     }
     selectFiles(){
         $('#filebrowser').click();
@@ -40,6 +50,14 @@ class SongList{
             $("#page div.col-4[name=placeholder_" + s + "]").html(`<div class="card empty"><div class="card-body" onclick="songlist.selectFiles();"><span>${emptyCardText}</span></div></div>`);   
         }
     }
+    rightclick(event, filename, placeholder){
+        event.preventDefault();
+        if($("#page div.col-4[name=" + placeholder + "] .card").hasClass('empty')) return false;
+        RenameModal.selected = { placeholder: placeholder, filename: filename };
+        RenameModal.open();
+        console.log(event);
+        console.log(name);
+    }
     update(){
         // Set pagecount
         this.pagecount = Math.ceil(this.list.length / 9);
@@ -50,7 +68,7 @@ class SongList{
         let range = this.selectedPage * 9;
         let targetsongs = songlist.list.slice(range, range + 9);
         for (var i = 0, song; song = targetsongs[i]; i++) {
-            $("#page div.col-4[name=placeholder_" + i + "]").html(`<div class="card song"><div class="card-body" onclick="songlist.selectPlaceholder(${i});"><span>${i + 1}</span><h5 class="card-title">${'name'}</h5><h6 class="card-subtitle mb-2 text-muted">${song.file.name}</h6><p class="card-text">${'duration'}</p></div></div>`);   
+            $("#page div.col-4[name=placeholder_" + i + "]").html(`<div class="card song"><div class="card-body" onclick="songlist.selectPlaceholder(${i});"><span>${i + 1}</span><h5 class="card-title">${Storage.getSongName(song.file.name)}</h5><h6 class="card-subtitle mb-2 text-muted">${song.file.name}</h6><p class="card-text">${'duration'}</p></div></div>`);   
         }
         // Update # page text
         $('#page #pagebar #currentPage').text(`${this.selectedPage + 1} / ${this.pagecount}`);
@@ -62,7 +80,7 @@ class SongList{
         if(index == songlist.list.length) index = 0; 
         // If aleady selected, return
         if(this.selectedSongIndex == index) return false;
-        $(`${Playbar.id} #currentSongInfo`).html(`<b>${songlist.list[index].file.name}</b> (${songlist.list[index].file.name})`);
+        $(`${Playbar.id} #currentSongInfo`).html(`<b>${Storage.getSongName(songlist.list[index].file.name)}</b> (${songlist.list[index].file.name})`);
         this.stop();
         Playbar.show();
         Playbar.graph.load(songlist.list[index].url);
@@ -100,9 +118,9 @@ class SongList{
             
     }
     stop(){
-        if(this.disabled) return false;
         $("#btn_play").text("play_circle_filled");
 		$("#btn_play").removeClass("playing").removeClass("paused").addClass("stopped");
+        $(`#page div.col-4[name=placeholder_${this.selectedSongIndex}] .card`).removeClass('selected');
         Playbar.graph.stop();
         Playbar.updateTime();
     }
@@ -255,7 +273,7 @@ class Playbar{
             'Placeholder9': {key: 'Numpad3', event: `songlist.selectPlaceholder(3)`}
         }
         $('body').keyup(function(e) {
-          Playbar.keyPress(e.originalEvent.code);
+            if(songlist.keylisten) Playbar.keyPress(e.originalEvent.code);
         });
     }
     static keyPress(key){
@@ -271,6 +289,47 @@ class Playbar{
     }
 }
 
+class Storage {
+    
+    static init(){
+        this.enabled = false;
+        if (typeof(Storage) == "undefined") return false;
+        this.enabled = true;
+        if(!localStorage.songnames) localStorage.songnames = "{}";
+        this.json = JSON.parse(localStorage.songnames);       
+    }
+    static update(){
+        localStorage.songnames = JSON.stringify(this.json);
+    }
+    static getSongName(filename){
+        if(filename in Storage.json) return Storage.json[filename];
+        else return filename;
+    }
+    static setSongName(filename, displayname){
+        this.json[filename ] = displayname;
+        this.update();
+    }
+    
+}
+
+class RenameModal{
+    static open(){
+        songlist.keylisten = false;
+        $('#mod_rename #txt_newname').val($("#page div.col-4[name=" + this.selected.placeholder + "] .card-title").text());
+        $('#mod_rename').modal('show');
+    }
+    static onclose(save){
+        if(save){
+            console.log(this.selected);
+            let newname = $('#mod_rename #txt_newname').val();
+            if(newname == ""){ return false; }
+            Storage.setSongName(this.selected.filename, newname);
+            $("#page div.col-4[name=" + this.selected.placeholder + "] .card-title").text(newname);
+            songlist.keylisten = true;   
+        }
+    }
+}
+
 const emptyCardText = 'Click to add audio';
 songlist = new SongList();
 
@@ -279,9 +338,13 @@ $(function(){
     if (window.File && window.FileReader && window.FileList && window.Blob) console.log(`Browser is fully supported.`);
     else $('body').css({ "margin": "8px", "background-color": "#ffbcbc" }).html(`<h1>We're sorry</h1><p>Your browser does not support the necessary functions to run this program. Try using another browser.</p>`);
     
+    Storage.init();
     songlist.init();
     Playbar.init();
     Playbar.setupKeys();
+    
+    
+    
     
     // document.getElementById('filebrowser').addEventListener('change', audioControls.newFile, false);
     
