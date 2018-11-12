@@ -60,8 +60,12 @@
 				</div>
             </div>
 			<div class="col-1">
-				<p id="volumeText">75%</p>
-				<input id="volume" type="range" min="0" max="100" value="75" oninput="songlist.setVolume(this.value)">
+                <div class="row">
+                    <div class="col"><p id="volumeText"><i class="material-icons">volume_up</i>&nbsp;75%</p></div>
+                </div>
+                <div class="row">
+                    <div class="col"><input id="volume" type="range" min="0" max="100" value="75" oninput="songlist.setVolume(this.value)"></div>
+                </div>
 			</div>
         </div>
     </div>
