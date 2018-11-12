@@ -10,6 +10,7 @@ class SongList{
         this.list = [];
         this.selectedSongIndex = -1;
         this.selectedPage = 0;
+        this.pagecount = 1;
     }
     
     init(){
@@ -39,16 +40,18 @@ class SongList{
         }
     }
     update(){
+        // Set pagecount
+        this.pagecount = Math.ceil(this.list.length / 9);
+        if(this.pagecount == 0) pagecount = 1;
         // Empty each placeholder
         this.empty();
         // Place songs from songlist
         let index = this.selectedPage * 9;
         let targetsongs = songlist.list.slice(index, index + 9);
         for (var i = 0, song; song = targetsongs[i]; i++) {
-            $("#page div.col-4[name=placeholder_" + i + "]").html(`<div class="card song"><div class="card-body" onclick="songlist.selectSong(${i});"><span>${i + 1}</span><h5 class="card-title">${'name'}</h5><h6 class="card-subtitle mb-2 text-muted">${song.file.name}</h6><p class="card-text">${'duration'}</p></div></div>`);   
+            $("#page div.col-4[name=placeholder_" + i + "]").html(`<div class="card song"><div class="card-body" onclick="songlist.selectPlaceholder(${i});"><span>${i + 1}</span><h5 class="card-title">${'name'}</h5><h6 class="card-subtitle mb-2 text-muted">${song.file.name}</h6><p class="card-text">${'duration'}</p></div></div>`);   
         }
-        let pagecount = Math.ceil(this.list.length / 9);
-        $('#page #pagebar #currentPage').text(`${this.selectedPage + 1} / ${pagecount}`);
+        $('#page #pagebar #currentPage').text(`${this.selectedPage + 1} / ${this.pagecount}`);
     }
     selectSong(index){
         // If aleady selected, return
@@ -59,20 +62,21 @@ class SongList{
         this.stop();
         Playbar.show();
         Playbar.graph.load(songlist.list[index].url);
-        $("#page div.col-4[name=placeholder_" + this.selectedSongIndex + "] .card").removeClass('selected');
-        $("#page div.col-4[name=placeholder_" + index + "] .card").addClass('selected');
+        if(index >= (this.selectedPage + 1) * 9) this.nextPage();
+        if(index < this.selectedPage * 9) this.prevPage();
+        $(`#page div.col-4[name=placeholder_${this.selectedSongIndex}] .card`).removeClass('selected');
+        $(`#page div.col-4[name=placeholder_${index % 9}] .card`).addClass('selected');
         this.selectedSongIndex = index;
     }
     selectPage(page){
-        let pagecount = Math.ceil(this.list.length / 9);
-        if(pagecount == 0) pagecount = 1;
-        if(page < 0) this.selectedPage = pagecount - 1;
-        else if(page > pagecount - 1) this.selectedPage = 0;
+        if(page < 0) this.selectedPage = this.pagecount - 1;
+        else if(page > this.pagecount - 1) this.selectedPage = 0;
         else this.selectedPage = page;
         this.update();
     }
     selectPlaceholder(index){
         if(index < 0 || index > 9) return false;
+        this.selectSong(index + (9 * this.selectedPage));
     }
     play(){
         $("#btn_play").text("pause_circle_filled");
