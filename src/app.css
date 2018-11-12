@@ -72,6 +72,12 @@ body{
 #playbar #btn_stop:hover {
     background-color:hsl(0, 98%, 33%);
 }
+#playbar #btn_play.disabled, #playbar #btn_play.disabled:hover {
+    color:hsl(0, 0%, 80%) !important;
+}
+#playbar #btn_stop.disabled, #playbar #btn_stop.disabled:hover {
+    background-color:hsl(0, 0%, 80%) !important;
+}
 
 #playbar #btn_close {
     position: absolute;
@@ -145,14 +151,13 @@ body{
 }
 
 #volume{
-	transform: rotate(-90deg);
-	position: absolute;
-	bottom: 34px;
-	width: 85%;
-	left: 8px;
+	width: 100%;
 }
 #volumeText{
 	text-align: center;
+}
+#volumeText i{
+	vertical-align: text-top;
 }
 
 /* ===================== PAGE =======================*/
