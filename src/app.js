@@ -1,4 +1,4 @@
-﻿const __version__ = 2.2;
+﻿const __version__ = "2.2.3";
 const emptyCardText = 'Click to add audio';
 
 class Song{
@@ -338,12 +338,10 @@ class Updater {
         let url = 'http://maartenverheul.nl/cisumrexim/versions.json';
         $.getJSON(url, function( data ) {
             if(version == data.latest) console.log(`Running the latest version ${version}. Good!`);
-            else if(version < data.latest){
-                console.log(`Running the latest version ${version}, but version ${data.latest} is available already.`);
+            else{
+                console.warn(`Running the latest version ${version}, but version ${data.latest} is available already.`);
                 if(Storage.getUpdateChoise()) Updater.popup(data.latest);
                 else Updater.showReminder();
-            }else{
-                console.warn(`Running unofficial version ${version} as a development version.`);
             }
             this.latest = data.latest;
         }).fail(function() {
