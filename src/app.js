@@ -58,8 +58,6 @@ class SongList{
         if($("#page div.col-4[name=" + placeholder + "] .card").hasClass('empty')) return false;
         RenameModal.selected = { placeholder: placeholder, filename: filename };
         RenameModal.open();
-        console.log(event);
-        console.log(name);
     }
     update(){
         // Set pagecount
@@ -115,7 +113,6 @@ class SongList{
     }
     playpause(){
         if(this.disabled) return false;
-        console.log('playpause');
         if(Playbar.graph.isPlaying()) this.pause();
         else this.play();
             
@@ -266,7 +263,7 @@ class Storage {
         this.enabled = true;
         if(!localStorage.songnames) localStorage.songnames = "{}";
         // Default keys
-        if(!localStorage.hotkeys) localStorage.hotkeys = `{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowRight","key":"ARROWRIGHT"},"nextsong":{"code":"ArrowLeft","key":"ARROWLEFT"},"prevpage":{"code":"ArrowUp","key":"ARROWUP"},"nextpage":{"code":"ArrowDown","key":"ARROWDOWN"}}`;
+        if(!localStorage.hotkeys) localStorage.hotkeys = `{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowLeft","key":"ArrowLeft"},"nextsong":{"code":"ArrowRight","key":"ArrowRight"},"prevpage":{"code":"ArrowUp","key":"ArrowUp"},"nextpage":{"code":"ArrowDown","key":"ArrowDown"},"placeholder1":{"code":"Numpad1","key":"1"},"placeholder2":{"code":"Numpad2","key":"2"},"placeholder3":{"code":"Numpad3","key":"3"},"placeholder4":{"code":"Numpad4","key":"4"},"placeholder5":{"code":"Numpad5","key":"5"},"placeholder6":{"code":"Numpad6","key":"6"},"placeholder7":{"code":"Numpad7","key":"7"},"placeholder8":{"code":"Numpad8","key":"8"},"placeholder9":{"code":"Numpad9","key":"9"},"placeholder0":{"code":"Numpad7","key":"7"}}`;
         this.songnames = JSON.parse(localStorage.songnames);   
         this.hotkeys = JSON.parse(localStorage.hotkeys);
         
@@ -317,7 +314,6 @@ class RenameModal{
     }
     static onclose(save){
         if(save){
-            console.log(this.selected);
             let newname = $('#mod_rename #txt_newname').val();
             if(newname == ""){ return false; }
             Storage.setSongName(this.selected.filename, newname);
@@ -347,7 +343,7 @@ class Updater {
                 if(Storage.getUpdateChoise()) Updater.popup(data.latest);
                 else Updater.showReminder();
             }else{
-                console.log(`Running unofficial version ${version} as a development version.`);
+                console.warn(`Running unofficial version ${version} as a development version.`);
             }
             this.latest = data.latest;
         }).fail(function() {
@@ -386,9 +382,9 @@ class HotkeyManager{
             e.preventDefault();
             $(this).removeClass('selecting');
             let code = e.originalEvent.code;
-            let key = e.originalEvent.key.toUpperCase();
+            let key = e.originalEvent.key;
             if(code == 'Space') key = 'SPACE';
-            $(this).val(key); 
+            $(this).val(key.toUpperCase());
             HotkeyManager.bindHotkey($(this).attr('name'), code, key);
             $(this).blur();
         });
@@ -397,19 +393,19 @@ class HotkeyManager{
         this.keyfunctions = {
             'playpause': `songlist.playpause()`,
             'stop': `songlist.stop()`,
-            'pageUp': `songlist.nextPage()`,
-            'pageDown': `songlist.prevPage()`,
-            'prevSong': `songlist.prevSong()`,
-            'nextSong': `songlist.nextSong()`,
-            'Placeholder1': `songlist.selectPlaceholder(7)`,
-            'Placeholder2': `songlist.selectPlaceholder(8)`,
-            'Placeholder3': `songlist.selectPlaceholder(9)`,
-            'Placeholder4': `songlist.selectPlaceholder(4)`,
-            'Placeholder5': `songlist.selectPlaceholder(5)`,
-            'Placeholder6': `songlist.selectPlaceholder(6)`,
-            'Placeholder7': `songlist.selectPlaceholder(1)`,
-            'Placeholder8': `songlist.selectPlaceholder(2)`,
-            'Placeholder9': `songlist.selectPlaceholder(3)`
+            'pageup': `songlist.nextPage()`,
+            'pagedown': `songlist.prevPage()`,
+            'prevsong': `songlist.prevSong()`,
+            'nextsong': `songlist.nextSong()`,
+            'placeholder1': `songlist.selectPlaceholder(6)`,
+            'placeholder2': `songlist.selectPlaceholder(7)`,
+            'placeholder3': `songlist.selectPlaceholder(8)`,
+            'placeholder4': `songlist.selectPlaceholder(3)`,
+            'placeholder5': `songlist.selectPlaceholder(4)`,
+            'placeholder6': `songlist.selectPlaceholder(5)`,
+            'placeholder7': `songlist.selectPlaceholder(0)`,
+            'placeholder8': `songlist.selectPlaceholder(1)`,
+            'placeholder9': `songlist.selectPlaceholder(2)`
         }
         
         // Keypress listener
