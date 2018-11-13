@@ -373,13 +373,15 @@ class Updater {
     }
     
     static checkVersion(version){
-        let url = 'http://maartenverheul.nl/cisumrexim/versions.json'
+        let url = 'http://maartenverheul.nl/cisumrexim/versions.json';
         $.getJSON(url, function( data ) {
             if(version < data.latest){
                 if(Storage.getUpdateChoise()) Updater.popup(data.latest);
                 else Updater.showReminder();
             } 
             this.latest = data.latest;
+        }).fail(function() {
+            console.log("Could not get updates");
         });
     }
     
