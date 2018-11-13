@@ -1,4 +1,4 @@
-﻿const __version__ = 1.9;
+﻿const __version__ = 2.1;
 const emptyCardText = 'Click to add audio';
 
 class Song{
@@ -351,6 +351,7 @@ class Updater {
     
     static popup(version){
         songlist.keylisten = false;
+        if(!version) version = this.latest;
         $('#mod_update .modal-body').text($('#mod_update .modal-body').text().replace('{v}', version));
         $('#mod_update').modal();
     }
@@ -358,13 +359,24 @@ class Updater {
     static checkVersion(version){
         let url = 'http://maartenverheul.nl/cisumrexim/versions.json'
         $.getJSON(url, function( data ) {
-            if(version !== data.latest && Storage.getUpdateChoise()) Updater.popup(data.latest);
+            if(version < data.latest){
+                if(Storage.getUpdateChoise()) Updater.popup(data.latest);
+                else Updater.showReminder();
+            } 
+            this.latest = data.latest;
         });
+    }
+    
+    static showReminder(){
+        $('#updatereminder').show();
     }
     
     static onclose(choise){
         if(choise) window.location.assign('https://github.com/maartenverheul/CisumRexim/releases');
-        else Storage.disableUpdate();
+        else {
+            Storage.disableUpdate();
+            Updater.showReminder();
+        } 
         songlist.keylisten = true;
     }
     
