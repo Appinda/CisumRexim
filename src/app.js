@@ -299,20 +299,26 @@ class Storage {
         if (typeof(Storage) == "undefined") return false;
         this.enabled = true;
         if(!localStorage.songnames) localStorage.songnames = "{}";
-        this.json = JSON.parse(localStorage.songnames);       
+        if(!localStorage.hotkeys) localStorage.hotkeys = "{}";
+        this.songnames = JSON.parse(localStorage.songnames);   
+        this.hotkeys = JSON.parse(localStorage.hotkeys);
+        
     }
     static update(){
         if(!this.enabled) return false;
-        localStorage.songnames = JSON.stringify(this.json);
+        localStorage.songnames = JSON.stringify(this.songnames);
+        localStorage.hotkeys = JSON.stringify(this.hotkeys);
     }
     static getSongName(filename){
-        if(this.enabled && filename in Storage.json) return Storage.json[filename];
+        if(!this.enabled) return false;
+        if(filename in Storage.songnames) return Storage.songnames[filename];
         else return filename;
     }
     static setSongName(filename, displayname){
         if(!this.enabled) return false;
-        this.json[filename ] = displayname;
+        this.songnames[filename] = displayname;
         this.update();
+        return true;
     }
     static disableUpdate(){
         if(!this.enabled) return false;
@@ -324,7 +330,17 @@ class Storage {
         if(localStorage.doUpdate == 'false') return false;
         else return true;
     }
-    
+    static getHotkeys(){
+        if(!this.enabled) return false;
+        if(!localStorage.hotkeys) localStorage.hotkeys = "{}";
+        return this.hotkeys;
+    }
+    static setHotkey(name, code, key){
+        if(!this.enabled) return false;
+        this.hotkeys[name] = {code: code, key: key};
+        this.update();
+        return true;
+    }
 }
 
 class RenameModal{
@@ -382,6 +398,61 @@ class Updater {
     
 }
 
+class HotkeyManager{
+    
+    static setup(){
+        $('.hotkey').click(function(){
+            $(this).addClass('selecting');
+            $(this).val('Press a key');
+        });
+        $('.hotkey').blur(function(e) {
+            $(this).removeClass('selecting');
+            if($(this).val() == 'Press a key') $(this).val('None');
+        });
+        $('.hotkey').keydown(function(e) {
+            // Key pressed
+            e.preventDefault();
+            $(this).removeClass('selecting');
+            $(this).val(e.originalEvent.key.toUpperCase()); 
+            HotkeyManager.bindHotkey($(this).attr('name'), e.originalEvent.code, e.originalEvent.key.toUpperCase());
+            $(this).blur();
+        });
+    }
+    
+    static update(){
+        let hotkeys = Storage.getHotkeys();
+        for(let h in hotkeys){
+            $(`.hotkey[name="${h}"]`).val(hotkeys[h].key);
+        }
+    }
+    
+    static bindHotkey(name, code, key){
+        this.newhotkeylist[name] = {code: code, key: key};
+    }
+    
+    static saveHotkeys(){
+        for(let h in this.newhotkeylist){
+            Storage.setHotkey(h, this.newhotkeylist[h].code, this.newhotkeylist[h].key);
+        }
+    }
+    
+    static popup(){
+        songlist.keylisten = false;
+        // Empty list
+        this.newhotkeylist = {};
+        // Place old hotkeys
+        this.update();
+        //Open modal
+        $('#mod_hotkeys').modal();
+    }
+    
+    static onclose(save){
+        if(save) this.saveHotkeys();
+        songlist.keylisten = true;
+    }
+    
+}
+
 $(function(){
     // check support
     if (window.File && window.FileReader && window.FileList && window.Blob) console.log(`Browser is fully supported.`);
@@ -390,6 +461,7 @@ $(function(){
     Storage.init();
     Updater.checkVersion(__version__);
     songlist.init();
+    HotkeyManager.setup();
     Playbar.init();
     Playbar.setupKeys();
     
