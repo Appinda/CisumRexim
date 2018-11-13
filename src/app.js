@@ -263,7 +263,7 @@ class Storage {
         this.enabled = true;
         if(!localStorage.songnames) localStorage.songnames = "{}";
         // Default keys
-        if(!localStorage.hotkeys) localStorage.hotkeys = `{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowLeft","key":"ArrowLeft"},"nextsong":{"code":"ArrowRight","key":"ArrowRight"},"prevpage":{"code":"ArrowUp","key":"ArrowUp"},"nextpage":{"code":"ArrowDown","key":"ArrowDown"},"placeholder1":{"code":"Numpad1","key":"1"},"placeholder2":{"code":"Numpad2","key":"2"},"placeholder3":{"code":"Numpad3","key":"3"},"placeholder4":{"code":"Numpad4","key":"4"},"placeholder5":{"code":"Numpad5","key":"5"},"placeholder6":{"code":"Numpad6","key":"6"},"placeholder7":{"code":"Numpad7","key":"7"},"placeholder8":{"code":"Numpad8","key":"8"},"placeholder9":{"code":"Numpad9","key":"9"},"placeholder0":{"code":"Numpad7","key":"7"}}`;
+        if(!localStorage.hotkeys) localStorage.hotkeys = HotkeyManager.defaultHotkeys;
         this.songnames = JSON.parse(localStorage.songnames);   
         this.hotkeys = JSON.parse(localStorage.hotkeys);
         
@@ -369,6 +369,8 @@ class Updater {
 class HotkeyManager{
     
     static setup(){
+        this.defaultHotkeys = `{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowLeft","key":"ArrowLeft"},"nextsong":{"code":"ArrowRight","key":"ArrowRight"},"prevpage":{"code":"ArrowUp","key":"ArrowUp"},"nextpage":{"code":"ArrowDown","key":"ArrowDown"},"placeholder1":{"code":"Numpad1","key":"1"},"placeholder2":{"code":"Numpad2","key":"2"},"placeholder3":{"code":"Numpad3","key":"3"},"placeholder4":{"code":"Numpad4","key":"4"},"placeholder5":{"code":"Numpad5","key":"5"},"placeholder6":{"code":"Numpad6","key":"6"},"placeholder7":{"code":"Numpad7","key":"7"},"placeholder8":{"code":"Numpad8","key":"8"},"placeholder9":{"code":"Numpad9","key":"9"},"placeholder0":{"code":"Numpad7","key":"7"}}`;
+        
         $('.hotkey').click(function(){
             $(this).addClass('selecting');
             $(this).val('Press a key');
@@ -417,7 +419,7 @@ class HotkeyManager{
     static update(){
         let hotkeys = Storage.getHotkeys();
         for(let h in hotkeys){
-            $(`.hotkey[name="${h}"]`).val(hotkeys[h].key);
+            $(`.hotkey[name="${h}"]`).val(hotkeys[h].key.toUpperCase());
         }
     }
     
@@ -455,6 +457,14 @@ class HotkeyManager{
     static onclose(save){
         if(save) this.saveHotkeys();
         songlist.keylisten = true;
+    }
+    
+    static reset(){
+        let dhk = JSON.parse(HotkeyManager.defaultHotkeys);
+        for(let h in dhk){
+            $(`.hotkey[name="${h}"]`).val(dhk[h].key.toUpperCase());
+            HotkeyManager.bindHotkey(h, dhk[h].code, dhk[h].key);
+        }
     }
     
 }
