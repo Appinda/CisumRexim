@@ -474,10 +474,10 @@ $(function(){
     if (window.File && window.FileReader && window.FileList && window.Blob) console.log(`Browser is fully supported.`);
     else $('body').css({ "margin": "8px", "background-color": "#ffbcbc" }).html(`<h1>We're sorry</h1><p>Your browser does not support the necessary functions to run this program. Try using another browser.</p>`);
     
+    HotkeyManager.setup();
     Storage.init();
     Updater.checkVersion(__version__);
     songlist.init();
-    HotkeyManager.setup();
     Playbar.init();
     
 });
