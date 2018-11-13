@@ -1,4 +1,7 @@
-﻿class Song{
+﻿const __version__ = 1.9;
+const emptyCardText = 'Click to add audio';
+
+class Song{
     constructor(file){
         this.file = file;
         this.url = URL.createObjectURL(this.file);
@@ -299,15 +302,27 @@ class Storage {
         this.json = JSON.parse(localStorage.songnames);       
     }
     static update(){
+        if(!this.enabled) return false;
         localStorage.songnames = JSON.stringify(this.json);
     }
     static getSongName(filename){
-        if(filename in Storage.json) return Storage.json[filename];
+        if(this.enabled && filename in Storage.json) return Storage.json[filename];
         else return filename;
     }
     static setSongName(filename, displayname){
+        if(!this.enabled) return false;
         this.json[filename ] = displayname;
         this.update();
+    }
+    static disableUpdate(){
+        if(!this.enabled) return false;
+        localStorage.doUpdate = 'false';
+        return true;
+    }
+    static getUpdateChoise(){
+        if(!this.enabled) return false;
+        if(localStorage.doUpdate == 'false') return false;
+        else return true;
     }
     
 }
@@ -325,13 +340,35 @@ class RenameModal{
             if(newname == ""){ return false; }
             Storage.setSongName(this.selected.filename, newname);
             $("#page div.col-4[name=" + this.selected.placeholder + "] .card-title").text(newname);
-            songlist.keylisten = true;   
         }
+        songlist.keylisten = true;
     }
 }
 
-const emptyCardText = 'Click to add audio';
 songlist = new SongList();
+
+class Updater {
+    
+    static popup(version){
+        songlist.keylisten = false;
+        $('#mod_update .modal-body').text($('#mod_update .modal-body').text().replace('{v}', version));
+        $('#mod_update').modal();
+    }
+    
+    static checkVersion(version){
+        let url = 'http://maartenverheul.nl/cisumrexim/versions.json'
+        $.getJSON(url, function( data ) {
+            if(version !== data.latest && Storage.getUpdateChoise()) Updater.popup(data.latest);
+        });
+    }
+    
+    static onclose(choise){
+        if(choise) window.location.assign('https://github.com/maartenverheul/CisumRexim/releases');
+        else Storage.disableUpdate();
+        songlist.keylisten = true;
+    }
+    
+}
 
 $(function(){
     // check support
@@ -339,13 +376,9 @@ $(function(){
     else $('body').css({ "margin": "8px", "background-color": "#ffbcbc" }).html(`<h1>We're sorry</h1><p>Your browser does not support the necessary functions to run this program. Try using another browser.</p>`);
     
     Storage.init();
+    Updater.checkVersion(__version__);
     songlist.init();
     Playbar.init();
     Playbar.setupKeys();
-    
-    
-    
-    
-    // document.getElementById('filebrowser').addEventListener('change', audioControls.newFile, false);
     
 });
