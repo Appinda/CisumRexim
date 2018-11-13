@@ -1,4 +1,4 @@
-﻿const __version__ = 2.1;
+﻿const __version__ = 2.2;
 const emptyCardText = 'Click to add audio';
 
 class Song{
@@ -256,40 +256,6 @@ class Playbar{
         }
         return true;
     }
-    
-    static setupKeys(){
-        this.keybindings = {
-            'playpause': {key: 'NumpadEnter', event: `songlist.playpause()`},
-            'stop': {key: 'NumpadAdd', event: `songlist.stop()`},
-            'pageUp': {key: 'ArrowUp', event: `songlist.nextPage()`},
-            'pageDown': {key: 'ArrowDown', event: `songlist.prevPage()`},
-            'prevSong': {key: 'ArrowLeft', event: `songlist.prevSong()`},
-            'nextSong': {key: 'ArrowRight', event: `songlist.nextSong()`},
-            'Placeholder1': {key: 'Numpad7', event: `songlist.selectPlaceholder(7)`},
-            'Placeholder2': {key: 'Numpad8', event: `songlist.selectPlaceholder(8)`},
-            'Placeholder3': {key: 'Numpad9', event: `songlist.selectPlaceholder(9)`},
-            'Placeholder4': {key: 'Numpad4', event: `songlist.selectPlaceholder(4)`},
-            'Placeholder5': {key: 'Numpad5', event: `songlist.selectPlaceholder(5)`},
-            'Placeholder6': {key: 'Numpad6', event: `songlist.selectPlaceholder(6)`},
-            'Placeholder7': {key: 'Numpad1', event: `songlist.selectPlaceholder(1)`},
-            'Placeholder8': {key: 'Numpad2', event: `songlist.selectPlaceholder(2)`},
-            'Placeholder9': {key: 'Numpad3', event: `songlist.selectPlaceholder(3)`}
-        }
-        $('body').keyup(function(e) {
-            if(songlist.keylisten) Playbar.keyPress(e.originalEvent.code);
-        });
-    }
-    static keyPress(key){
-        for(let name in this.keybindings){
-            if(key == this.keybindings[name]['key']){
-                eval(this.keybindings[name]['event']);
-                return true;
-            }
-        }
-        console.log(key);
-        return false;
-        
-    }
 }
 
 class Storage {
@@ -299,7 +265,8 @@ class Storage {
         if (typeof(Storage) == "undefined") return false;
         this.enabled = true;
         if(!localStorage.songnames) localStorage.songnames = "{}";
-        if(!localStorage.hotkeys) localStorage.hotkeys = "{}";
+        // Default keys
+        if(!localStorage.hotkeys) localStorage.hotkeys = `{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowRight","key":"ARROWRIGHT"},"nextsong":{"code":"ArrowLeft","key":"ARROWLEFT"},"prevpage":{"code":"ArrowUp","key":"ARROWUP"},"nextpage":{"code":"ArrowDown","key":"ARROWDOWN"}}`;
         this.songnames = JSON.parse(localStorage.songnames);   
         this.hotkeys = JSON.parse(localStorage.hotkeys);
         
@@ -332,7 +299,6 @@ class Storage {
     }
     static getHotkeys(){
         if(!this.enabled) return false;
-        if(!localStorage.hotkeys) localStorage.hotkeys = "{}";
         return this.hotkeys;
     }
     static setHotkey(name, code, key){
@@ -375,10 +341,14 @@ class Updater {
     static checkVersion(version){
         let url = 'http://maartenverheul.nl/cisumrexim/versions.json';
         $.getJSON(url, function( data ) {
-            if(version < data.latest){
+            if(version == data.latest) console.log(`Running the latest version ${version}. Good!`);
+            else if(version < data.latest){
+                console.log(`Running the latest version ${version}, but version ${data.latest} is available already.`);
                 if(Storage.getUpdateChoise()) Updater.popup(data.latest);
                 else Updater.showReminder();
-            } 
+            }else{
+                console.log(`Running unofficial version ${version} as a development version.`);
+            }
             this.latest = data.latest;
         }).fail(function() {
             console.log("Could not get updates");
@@ -415,9 +385,36 @@ class HotkeyManager{
             // Key pressed
             e.preventDefault();
             $(this).removeClass('selecting');
-            $(this).val(e.originalEvent.key.toUpperCase()); 
-            HotkeyManager.bindHotkey($(this).attr('name'), e.originalEvent.code, e.originalEvent.key.toUpperCase());
+            let code = e.originalEvent.code;
+            let key = e.originalEvent.key.toUpperCase();
+            if(code == 'Space') key = 'SPACE';
+            $(this).val(key); 
+            HotkeyManager.bindHotkey($(this).attr('name'), code, key);
             $(this).blur();
+        });
+        
+        // Key functions
+        this.keyfunctions = {
+            'playpause': `songlist.playpause()`,
+            'stop': `songlist.stop()`,
+            'pageUp': `songlist.nextPage()`,
+            'pageDown': `songlist.prevPage()`,
+            'prevSong': `songlist.prevSong()`,
+            'nextSong': `songlist.nextSong()`,
+            'Placeholder1': `songlist.selectPlaceholder(7)`,
+            'Placeholder2': `songlist.selectPlaceholder(8)`,
+            'Placeholder3': `songlist.selectPlaceholder(9)`,
+            'Placeholder4': `songlist.selectPlaceholder(4)`,
+            'Placeholder5': `songlist.selectPlaceholder(5)`,
+            'Placeholder6': `songlist.selectPlaceholder(6)`,
+            'Placeholder7': `songlist.selectPlaceholder(1)`,
+            'Placeholder8': `songlist.selectPlaceholder(2)`,
+            'Placeholder9': `songlist.selectPlaceholder(3)`
+        }
+        
+        // Keypress listener
+        $('body').keyup(function(e) {
+            if(songlist.keylisten) HotkeyManager.keyPress(e.originalEvent.code);
         });
     }
     
@@ -436,6 +433,17 @@ class HotkeyManager{
         for(let h in this.newhotkeylist){
             Storage.setHotkey(h, this.newhotkeylist[h].code, this.newhotkeylist[h].key);
         }
+    }
+    
+    static keyPress(code){
+        let hotkeys = Storage.getHotkeys();
+        for(let h in hotkeys){
+            if(code == hotkeys[h].code){
+                eval(this.keyfunctions[h]);  
+                return true;
+            } 
+        }
+        return true;
     }
     
     static popup(){
@@ -465,6 +473,5 @@ $(function(){
     songlist.init();
     HotkeyManager.setup();
     Playbar.init();
-    Playbar.setupKeys();
     
 });
