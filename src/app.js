@@ -1,4 +1,4 @@
-﻿const __version__ = "2.2.3";
+﻿const __version__ = "2.2.4";
 const emptyCardText = 'Click to add audio';
 
 class Song{
@@ -367,7 +367,7 @@ class Updater {
 class HotkeyManager{
     
     static setup(){
-        this.defaultHotkeys = `{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowLeft","key":"ArrowLeft"},"nextsong":{"code":"ArrowRight","key":"ArrowRight"},"prevpage":{"code":"ArrowUp","key":"ArrowUp"},"nextpage":{"code":"ArrowDown","key":"ArrowDown"},"placeholder1":{"code":"Numpad1","key":"1"},"placeholder2":{"code":"Numpad2","key":"2"},"placeholder3":{"code":"Numpad3","key":"3"},"placeholder4":{"code":"Numpad4","key":"4"},"placeholder5":{"code":"Numpad5","key":"5"},"placeholder6":{"code":"Numpad6","key":"6"},"placeholder7":{"code":"Numpad7","key":"7"},"placeholder8":{"code":"Numpad8","key":"8"},"placeholder9":{"code":"Numpad9","key":"9"},"placeholder0":{"code":"Numpad7","key":"7"}}`;
+        this.defaultHotkeys = '{"playpause":{"code":"NumpadEnter","key":"ENTER"},"stop":{"code":"NumpadAdd","key":"+"},"prevsong":{"code":"ArrowLeft","key":"ArrowLeft"},"nextsong":{"code":"ArrowRight","key":"ArrowRight"},"prevpage":{"code":"ArrowUp","key":"ArrowUp"},"nextpage":{"code":"ArrowDown","key":"ArrowDown"},"placeholder1":{"code":"Numpad1","key":"1"},"placeholder2":{"code":"Numpad2","key":"2"},"placeholder3":{"code":"Numpad3","key":"3"},"placeholder4":{"code":"Numpad4","key":"4"},"placeholder5":{"code":"Numpad5","key":"5"},"placeholder6":{"code":"Numpad6","key":"6"},"placeholder7":{"code":"Numpad7","key":"7"},"placeholder8":{"code":"Numpad8","key":"8"},"placeholder9":{"code":"Numpad9","key":"9"},"placeholder0":{"code":"Numpad7","key":"7"}}';
         
         $('.hotkey').click(function(){
             $(this).addClass('selecting');
