@@ -1,4 +1,4 @@
-﻿const __version__ = "2.2.4";
+﻿const __version__ = "2.2.5";
 const emptyCardText = 'Click to add audio';
 
 class Song{
