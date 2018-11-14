@@ -130,13 +130,13 @@
     <!-- Playbar -->
     <div class="container-fluid" id="playbar" style="z-index: 1;">
 		<div class="row" id="contolbar">
-			<div class="col-5 text-center highlight" onclick="songlist.prevSong();">
+			<div class="col-5 text-center highlight" onclick="songlist.prevSong();" title="Previous song">
 				<i class="material-icons">navigate_before</i>
 			</div>
 			<div class="col-2 text-center">
 				<span id="currentSongInfo"></span>
 			</div>
-			<div class="col-5 text-center highlight" onclick="songlist.nextSong();">
+			<div class="col-5 text-center highlight" onclick="songlist.nextSong();" title="Next song">
 				<i class="material-icons">navigate_next</i>
 			</div>
 		</div>
@@ -258,19 +258,19 @@
 			</div>
 		</div>
 		<div class="row" id="pagebar">
-			<div class="col-1 text-center highlight" onclick="songlist.prevPage();">
+			<div class="col-1 text-center highlight" onclick="songlist.prevPage();" title="Previous page">
 				<i class="material-icons">navigate_before</i>
 			</div>
 			<div class="col-10 text-center">
 				<span id="currentPage">1 / 1</span>
 			</div>
-			<div class="col-1 text-center highlight" onclick="songlist.nextPage();">
+			<div class="col-1 text-center highlight" onclick="songlist.nextPage();" title="Next page">
 				<i class="material-icons">navigate_next</i>
 			</div>
 		</div>
         <div class="row">
             <div class="col">
-                <img src="img/keys.png" id="btn_hotkeys" alt="hotkeys" onclick="HotkeyManager.popup()"/>
+                <img src="img/keys.png" id="btn_hotkeys" alt="hotkeys" title="Hotkey Manager" onclick="HotkeyManager.popup()"/>
             </div>
         </div>
     </div>
