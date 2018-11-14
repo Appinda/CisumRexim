@@ -393,8 +393,8 @@ class HotkeyManager{
         this.keyfunctions = {
             'playpause': `songlist.playpause()`,
             'stop': `songlist.stop()`,
-            'pageup': `songlist.nextPage()`,
-            'pagedown': `songlist.prevPage()`,
+            'nextpage': `songlist.nextPage()`,
+            'prevpage': `songlist.prevPage()`,
             'prevsong': `songlist.prevSong()`,
             'nextsong': `songlist.nextSong()`,
             'placeholder1': `songlist.selectPlaceholder(6)`,
@@ -434,8 +434,8 @@ class HotkeyManager{
     static keyPress(code){
         let hotkeys = Storage.getHotkeys();
         for(let h in hotkeys){
-            if(code == hotkeys[h].code){
-                eval(this.keyfunctions[h]);  
+            console.log(code == hotkeys[h].code);
+            if(code == hotkeys[h].code){                eval(this.keyfunctions[h]);  
                 return true;
             } 
         }
