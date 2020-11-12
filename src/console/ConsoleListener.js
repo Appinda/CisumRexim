@@ -56,5 +56,23 @@ ConsoleListener.prototype.exitStopallcommand = function(ctx) {
 };
 
 
+// Enter a parse tree produced by ConsoleParser#setcommand.
+ConsoleListener.prototype.enterSetcommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#setcommand.
+ConsoleListener.prototype.exitSetcommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#setthemecommand.
+ConsoleListener.prototype.enterSetthemecommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#setthemecommand.
+ConsoleListener.prototype.exitSetthemecommand = function(ctx) {
+};
+
+
 
 exports.ConsoleListener = ConsoleListener;

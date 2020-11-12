@@ -4,15 +4,24 @@ grammar Console;
 /*
  * Parser Rules
  */
-command: playcommand | stopcommand EOF;
-playcommand: 'PLAY' OBJ NUMBER 'ON' OBJ NUMBER ;
-stopcommand: stopallcommand | stopcuecommand ;
-stopcuecommand: 'STOP' OBJ NUMBER;
-stopallcommand: 'STOP ALL';
+command: (playcommand | stopcommand | setcommand) ENDING?;
+playcommand: 'PLAY';
+stopcommand: stopcuecommand | stopallcommand;
+stopcuecommand: 'STOP' object=OBJ id=NUMBER;
+stopallcommand: 'STOP' 'ALL';
+setcommand: setthemecommand;
+setthemecommand: 'SET' 'THEME' themename=STRING;
 
 /*
  * Lexer Rules
  */
-NUMBER: ('0'..'9')+;
-OBJ:  'SONG' | 'CUE';
+ENDING: ';';
+OBJ: 'CUE' | 'SONG';
+
+NUMBER: DIGIT+;
+STRING: LETTER+;
+
+DIGIT: ('0'..'9');
+LETTER: [A-Z];
+
 WHITESPACE: [ \t\r\n\u000C] -> skip;
