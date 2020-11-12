@@ -59,8 +59,14 @@
           border: 1px solid var(--gray-400);
         }
         tbody {
-          tr:nth-child(even) {
-            background-color: var(--gray-200);
+          tr {
+            cursor: pointer;
+            &:nth-child(even) {
+              background-color: var(--gray-200);
+            }
+            &:hover {
+              background-color: var(--gray-300)
+            }
           }
           td {
             border-right: 1px solid var(--gray-400);
