@@ -117,8 +117,21 @@
       margin-top: auto;
       height: 100%;
       overflow-y: scroll;
+      font-family: DroidSansMono;
+      cursor: default;
       li {
-
+        span.timestamp {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          margin-right: 8px;
+          color: var(--gray-500);
+          transition: color 30ms;
+        }
+        span.error {
+          color: red;
+        }
+        &:hover span.timestamp {
+          color: var(--gray-900);
+        }
       }
     }
   }

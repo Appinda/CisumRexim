@@ -1,5 +1,13 @@
 import React from 'react';
 import './App.scss';
+import antlr4 from 'antlr4';
+
+import { ConsoleLexer } from './console/ConsoleLexer';
+import { ConsoleParser } from './console/ConsoleParser';
+import ConsoleListener from './console/KeyPrinter';
+import ConsoleVisitor from './console/ConsoleVisitor';
+import ConsoleErrorListener from './console/ConsoleErrorListener';
+
 
 export default class App extends React.Component {
   constructor(props) {
@@ -7,7 +15,15 @@ export default class App extends React.Component {
     this.state = {
       mode: 'dark',
       consoleInput: '',
-      showConsoleHistrory: false
+      showConsoleHistrory: false,
+      consoleHistory: [
+        {text: "PLAY ALL FROM CUE",     timestamp: "2020-11-12 20:08:03.232" },
+        {text: "PLAY TRACK 5 ON CUE 1", timestamp: "2020-11-12 20:09:51.043" },
+        {text: "WAIT FOR FINISH",       timestamp: "2020-11-12 20:10:35.928" },
+        {text: "STOP ALL",              timestamp: "2020-11-12 20:11:13.124" },
+      ],
+      showTimestampInConsole: true,
+      showDateInConsole: false, // Not implemented yet
     };
   }
 
@@ -21,8 +37,31 @@ export default class App extends React.Component {
   onConsoleKeyDown(e){
     if(e.key == "Enter") this.onConsoleSubmit();
   }
-  onConsoleSubmit(){
+  clearConsole(){
     this.setState({ consoleInput: '' });
+  }
+  async onConsoleSubmit(){
+    // console.log(antlr4.error.ErrorListener)
+    const input = this.state.consoleInput.toUpperCase();
+    const timestamp = new Date().toJSON().replace(/T/g, ' ').replace(/Z/g, '');
+    this.clearConsole();
+
+    const chars = new antlr4.InputStream(input);
+    const lexer = new ConsoleLexer(chars);
+    const tokens = new antlr4.CommonTokenStream(lexer);
+    const parser = new ConsoleParser(tokens);
+
+    lexer.addErrorListener(new ConsoleErrorListener());
+    parser.addErrorListener(new ConsoleErrorListener());
+    parser.buildParseTrees = true;
+    
+    let tree = parser.command() // only repeated here for reference
+    const listener = new ConsoleListener();
+    antlr4.tree.ParseTreeWalker.DEFAULT.walk(listener, tree);
+    tree.accept(new ConsoleVisitor());
+
+    await this.appendConsoleHistory({ timestamp, text: input });
+    await this.appendConsoleHistory({ timestamp, text: 'Unexpected !', isError: true });
   }
   toggleConsoleHistory(){
     this.setState({showConsoleHistrory: !this.state.showConsoleHistrory})
@@ -40,6 +79,19 @@ export default class App extends React.Component {
       </tr>);
     }
     return result;
+  }
+  appendConsoleHistory({timestamp, text, isError}){
+    const line = {timestamp, text, isError};
+    return new Promise(resolve => this.setState({ consoleHistory: [...this.state.consoleHistory, line] }, resolve))
+  }
+  getConsoleHistory(){
+    if(this.state.showDateInConsole == false) console.warn("showDateInConsole = false functionality has not been implemented yet");
+    return this.state.consoleHistory.map((line, i) => {
+      return (
+        <li key={i}>
+          {this.state.showTimestampInConsole && <span className="timestamp">[{line.timestamp}]&nbsp;</span>}<span className={`message ${line.isError?'error': ''}`}>{line.isError && "> "}{line.text}</span>
+        </li>);
+    })
   }
 
   render() {
@@ -81,10 +133,7 @@ export default class App extends React.Component {
         </div>
         <div className={`consolehistory ${!this.state.showConsoleHistrory?'d-none':''}`}>
           <ul>
-            <li>PLAY ALL FROM CUE;</li>
-            <li>PLAY TRACK 5 ON CUE 1;</li>
-            <li>WAIT FOR FINISH;</li>
-            <li>STOP ALL;</li>
+            {this.getConsoleHistory()}
           </ul>
         </div>
       </div>
