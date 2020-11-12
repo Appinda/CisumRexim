@@ -16,7 +16,7 @@ export default class App extends React.Component {
   render() {
     const { mode } = this.state;
     return (
-      <div className={`App stylemode-${mode}`}>
+      <div className="App">
         <div className="header">
           <select className="combo" onChange={(e) => this.changeStyleMode(e)}>
             <option value="light">Light</option>
