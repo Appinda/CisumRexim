@@ -2,9 +2,10 @@
   display: grid;
   grid-template-areas: 
   "header playback"
+  "terminal playback"
   "cuelist playback";
   grid-template-columns: minmax(400px, 1fr) minmax(200px, 400px);
-  grid-template-rows: 150px 1fr;
+  grid-template-rows: 150px auto 1fr;
   height: 100vh;
   color: var(--text);
 
@@ -17,6 +18,32 @@
   .playback {
     grid-area: playback;
     background-color: var(--gray-200);
+  }
+  .terminal {
+    background-color: var(--terminal-background);
+    display: grid;
+    grid-template-columns: 16px auto;
+    * {
+      display: inline-block;
+    }
+    .prefix {
+      font-family: DroidSansMono;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-left: .5rem;
+      vertical-align: top;
+      margin-top: 3px;
+    }
+    input {
+      background-color: transparent;
+      border: none;
+      color: var(--black);
+      font-size: 1.1em;
+      padding: 3px .7rem;
+      font-family: DroidSansMono;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
   }
   .cuelist {
     background-color: var(--gray-100);

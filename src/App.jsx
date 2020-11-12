@@ -6,16 +6,27 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       mode: 'dark',
+      terminalInput: ''
     };
   }
 
-  changeStyleMode(e) {
-    document.documentElement.setAttribute("data-theme", e.target.value);
+  changeStyleMode(value) {
+    document.documentElement.setAttribute("data-theme", value);
+  }
+  onTerminalInputChange(newvalue){
+    newvalue = newvalue.toUpperCase();
+    this.setState({terminalInput: newvalue});
+  }
+  onTerminalKeyDown(e){
+    if(e.key == "Enter") this.onTerminalSubmit();
+  }
+  onTerminalSubmit(){
+    this.setState({ terminalInput: '' });
   }
   getCueList() {
     let result = [];
     for (let i = 0; i < 10; i++) {
-      result.push(<tr>
+      result.push(<tr key={i}>
         <td></td>
         <td>{i}</td>
         <td>Careless Whisper</td>
@@ -32,10 +43,14 @@ export default class App extends React.Component {
     return (
       <div className="App">
         <div className="header">
-          <select className="combo" onChange={(e) => this.changeStyleMode(e)}>
+          <select className="combo" onChange={(e) => this.changeStyleMode(e.target.value)}>
             <option value="light">Light</option>
             <option value="dark">Dark</option>
           </select>
+        </div>
+        {/* Terminal */}
+        <div className="terminal">
+          <span className="prefix">&gt; </span><input type="text" autoCorrect="off" onKeyDown={(e) => this.onTerminalKeyDown(e)} onChange={(e) => this.onTerminalInputChange(e.target.value)} value={this.state.terminalInput}/>
         </div>
         <div className="playback">
           P
