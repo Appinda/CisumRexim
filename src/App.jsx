@@ -6,22 +6,26 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       mode: 'dark',
-      terminalInput: ''
+      consoleInput: '',
+      showConsoleHistrory: false
     };
   }
 
   changeStyleMode(value) {
     document.documentElement.setAttribute("data-theme", value);
   }
-  onTerminalInputChange(newvalue){
+  onConsoleInputChange(newvalue){
     newvalue = newvalue.toUpperCase();
-    this.setState({terminalInput: newvalue});
+    this.setState({consoleInput: newvalue});
   }
-  onTerminalKeyDown(e){
-    if(e.key == "Enter") this.onTerminalSubmit();
+  onConsoleKeyDown(e){
+    if(e.key == "Enter") this.onConsoleSubmit();
   }
-  onTerminalSubmit(){
-    this.setState({ terminalInput: '' });
+  onConsoleSubmit(){
+    this.setState({ consoleInput: '' });
+  }
+  toggleConsoleHistory(){
+    this.setState({showConsoleHistrory: !this.state.showConsoleHistrory})
   }
   getCueList() {
     let result = [];
@@ -48,14 +52,15 @@ export default class App extends React.Component {
             <option value="dark">Dark</option>
           </select>
         </div>
-        {/* Terminal */}
-        <div className="terminal">
-          <span className="prefix">&gt; </span><input type="text" autoCorrect="off" onKeyDown={(e) => this.onTerminalKeyDown(e)} onChange={(e) => this.onTerminalInputChange(e.target.value)} value={this.state.terminalInput}/>
+        {/* Console */}
+        <div className="console">
+          <button className={`btn-focus ${this.state.showConsoleHistrory?'active':''}`} onClick={() => this.toggleConsoleHistory()}></button>
+          <span className="prefix">&gt; </span><input type="text" autoCorrect="off" onKeyDown={(e) => this.onConsoleKeyDown(e)} onChange={(e) => this.onConsoleInputChange(e.target.value)} value={this.state.consoleInput}/>
         </div>
         <div className="playback">
           P
         </div>
-        <div className="cuelist">
+        <div className={`cuelist ${this.state.showConsoleHistrory?'d-none':''}`}>
           <div className="cuelist-container">
             <table cellSpacing="0">
               <thead>
@@ -73,6 +78,14 @@ export default class App extends React.Component {
               </tbody>
             </table>
           </div>
+        </div>
+        <div className={`consolehistory ${!this.state.showConsoleHistrory?'d-none':''}`}>
+          <ul>
+            <li>PLAY ALL FROM CUE;</li>
+            <li>PLAY TRACK 5 ON CUE 1;</li>
+            <li>WAIT FOR FINISH;</li>
+            <li>STOP ALL;</li>
+          </ul>
         </div>
       </div>
     );
