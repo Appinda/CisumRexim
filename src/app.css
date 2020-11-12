@@ -1,280 +1,38 @@
-﻿.noselect {
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+.App {
+  text-align: center;
 }
 
-.disabled {
-    cursor: not-allowed;
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
 }
 
-/* ====================================== */
-
-body{
-    background-color: #ddd;
-    overflow: hidden;
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
 }
 
-#playbar {
-    background-color: white;
-    position: fixed;
-    bottom: 0px;
-    /* border-top: 2px solid black; */
-    box-shadow: 0px -19px 37px #ccc;
-    padding-bottom: 10px;
-	transform: translate(0px, 260px)
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-#playbar #btn_play {
-    font-size: 120px;
-    height: 100%;
-    transition: all 0.2s ease;
-}
-#playbar #btn_play.stopped{
-	color: hsl(120, 89%, 43%);
-}
-#playbar #btn_play.stopped:hover{
-	color: hsl(120, 89%, 33%);
-}
-#playbar #btn_play.paused{
-	-webkit-animation: PAUSING 1s infinite; /* Safari 4+ */
-	-moz-animation:    PAUSING 1s infinite; /* Fx 5+ */
-	-o-animation:      PAUSING 1s infinite; /* Opera 12+ */
-	animation:         PAUSING 1s infinite; /* IE 10+, Fx 29+ */
-}
-#playbar #btn_play.paused:hover{
-	color: hsl(39, 100%, 40%); 	
-}
-@-webkit-keyframes PAUSING {
-  0%   { color: hsl(39, 100%, 50%); }
-  50% { color: hsl(76, 100%, 40%); }
-  100%   { color: hsl(39, 100%, 50%); }
-}
-#playbar #btn_play.playing{
-	color:hsl(0, 98%, 43%);
-}
-#playbar #btn_play.playing:hover{
-	color:hsl(0, 98%, 33%);
+.App-link {
+  color: #61dafb;
 }
 
-#playbar #btn_stop {
-    color: white;
-    position: absolute;
-    top: 78px;
-    left: 96px;
-    padding: 7px;
-    background-color: hsl(0, 98%, 43%);
-    border-radius: 100%;
-    transition: all 0.2s ease;
-}
-#playbar #btn_stop:hover {
-    background-color:hsl(0, 98%, 33%);
-}
-#playbar #btn_play.disabled, #playbar #btn_play.disabled:hover {
-    color:hsl(0, 0%, 80%) !important;
-}
-#playbar #btn_stop.disabled, #playbar #btn_stop.disabled:hover {
-    background-color:hsl(0, 0%, 80%) !important;
-}
-
-#playbar #btn_close {
-    position: absolute;
-    top: 0px;
-    left: 10px;
-    padding: 5px;
-    border-radius: 100%;
-    transition: all 0.2s ease;
-	font-size: 15px;
-	font-weight: bold;
-	color: grey;
-}
-#playbar #btn_close:hover {
-    color: white;
-	background-color: grey;
-}
-#playbar .controlbtn.small {
-    color: #FFA500;
-    background-color: white;
-    padding: 7px;
-    border-radius: 100%;
-    transition: all 0.2s ease-in;
-}
-#playbar .controlbtn.small.selected{
-    -webkit-animation: SELECTED 1s infinite; /* Safari 4+ */
-	-moz-animation:    SELECTED 1s infinite; /* Fx 5+ */
-	-o-animation:      SELECTED 1s infinite; /* Opera 12+ */
-	animation:         SELECTED 1s infinite; /* IE 10+, Fx 29+ */
-}
-#playbar .controlbtn.small:hover {
-    color: white;
-    background-color: orange;
-}
-@-webkit-keyframes SELECTED {
-  0%   { color: orange; background-color: white; }
-  49%   { color: orange; background-color: white; }
-  50% { color: white; background-color: orange; }
-  100% { color: white; background-color: orange; }
-}
-
-#playbar #contolbar{
-	background-color: #aaa; 
-	margin-bottom: 10px;
-	transition: all 0.2s ease;
-}
-#playbar #contolbar div{
-	transition: all 0.5s ease;
-	height: 100%;
-	padding: 5px;
-}
-#playbar #contolbar div.highlight:hover{
-	background-color: #999;
-}
-#playbar #contolbar i{
-	font-size: 26px;
-	font-weight: bold;
-	vertical-align: bottom;
-}
-
-#waveform .timer{
-	position: absolute;
-	left: 0%;
-	top: 0;
-	z-index: 3;
-	background-color: white;
-	padding-right: 5px;
-}
-
-#waveform .graph, #waveform .graph wave{
-	z-index: 2;
-}
-
-#volume{
-	width: 100%;
-}
-#volumeText{
-	text-align: center;
-}
-#volumeText i{
-	vertical-align: text-top;
-}
-
-/* ===================== PAGE =======================*/
-#page .card .card-body{
-	border-radius: 3px;
-    cursor: pointer;
-}
-#page .card.empty{
-	height: 121px;
-	background-color: transparent;
-	border: 1px dashed rgba(0,0,0,.250);
-	text-align: center;
-}
-#page .card.empty span{
-	font-size: 30px;
-	font-weight: bold;
-	font-family: 'Arial Rounded MT';
-	color: rgba(0,0,0,.250);
-	filter: blur(1px);
-}
-
-#page .card.song{
-	border: 1px solid rgba(0,0,0,.300);
-}
-#page .card.song .card-body{
-	background-color: white;
-	transition: all 0.2s ease;
-	overflow: hidden;
-}
-#page .card.song .card-body:hover{
-	background-color: #ffecc9;
-}
-#page .card.song .card-body span{
-	position: absolute;
-	font-family: 'Arial Rounded MT';
-	right: 26px;
-	top: -52px;
-	color: #eee;
-	font-size: 150px;
-	filter: blur(2px);
-	transition: all 0.2s ease;
-	letter-spacing: -25px;
-}
-#page .card.song .card-body:hover span{
-	color:  #eccc92;
-}
-
-#page .card.selected .card-body{
-	background-color: #ffecc9;
-}
-#page .card.selected .card-body span{
-	color:  #eccc92;
-}
-
-#page .card.empty.drag{
-	border: 1px dashed black;
-}
-
-#page #pagebar{
-	margin-bottom: 10px;
-	transition: all 0.2s ease;
-    margin-left: 0px;
-    margin-right: 0px;
-    margin-top: 1rem;
-}
-#page #pagebar div{
-	transition: all 0.5s ease;
-	height: 100%;
-	padding: 5px;
-}
-#page #pagebar div:not(:nth-child(2)){
-    border-radius: 1rem;
-    background-color: #d4d4d4; 
-}
-#page #pagebar div.highlight:hover{
-	background-color: #999;
-}
-#page #pagebar i{
-	font-size: 26px;
-	font-weight: bold;
-	vertical-align: bottom;
-}
-
-#btn_hotkeys{
-    width: 40px;
-    height: 40px;
-    float: right;
-    cursor: pointer;
-}
-.hotkey:focus{
-    outline: none;
-    box-shadow: none;
-}
-.hotkey.selecting{
-    background-color: #ccc !important;
-}
-
-/* ===================== UPDATE =======================*/
-#updatereminder{
-    background-color: red;
-    position: absolute;
-    right: -130px;
-    top: -72px;
-    padding: 100px 100px 5px 100px;
-    color: white;
-    font-weight: bold;
-    font-size: 0.6rem;
-    z-index: 100;
-    transform: rotate(45deg);
-    transition: all 0.5s;
-    cursor: pointer;
-    display: none;
-}
-#updatereminder:hover{
-    right: -108px;
-    top: -47px;
-    font-size: 1.2rem;
-    text-decoration: none;
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
