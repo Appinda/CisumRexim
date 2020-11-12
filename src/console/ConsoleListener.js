@@ -38,21 +38,21 @@ ConsoleListener.prototype.exitStopcommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#stopcuecommand.
-ConsoleListener.prototype.enterStopcuecommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#stopcuecommand.
-ConsoleListener.prototype.exitStopcuecommand = function(ctx) {
-};
-
-
 // Enter a parse tree produced by ConsoleParser#stopallcommand.
 ConsoleListener.prototype.enterStopallcommand = function(ctx) {
 };
 
 // Exit a parse tree produced by ConsoleParser#stopallcommand.
 ConsoleListener.prototype.exitStopallcommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#stopcuecommand.
+ConsoleListener.prototype.enterStopcuecommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#stopcuecommand.
+ConsoleListener.prototype.exitStopcuecommand = function(ctx) {
 };
 
 
@@ -71,6 +71,15 @@ ConsoleListener.prototype.enterSetthemecommand = function(ctx) {
 
 // Exit a parse tree produced by ConsoleParser#setthemecommand.
 ConsoleListener.prototype.exitSetthemecommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#setsettingcommand.
+ConsoleListener.prototype.enterSetsettingcommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#setsettingcommand.
+ConsoleListener.prototype.exitSetsettingcommand = function(ctx) {
 };
 
 

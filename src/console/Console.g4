@@ -4,13 +4,14 @@ grammar Console;
 /*
  * Parser Rules
  */
-command: (playcommand | stopcommand | setcommand) ENDING?;
+command: (playcommand | stopcommand | setcommand) EOF;
 playcommand: 'PLAY';
-stopcommand: stopcuecommand | stopallcommand;
-stopcuecommand: 'STOP' object=OBJ id=NUMBER;
-stopallcommand: 'STOP' 'ALL';
-setcommand: setthemecommand;
-setthemecommand: 'SET' 'THEME' themename=STRING;
+stopcommand: 'STOP' (stopallcommand|stopcuecommand);
+stopallcommand: 'ALL';
+stopcuecommand: object=OBJ id=NUMBER;
+setcommand: 'SET' (setthemecommand|setsettingcommand);
+setthemecommand: 'THEME' themename=STRING;
+setsettingcommand: 'SETTING' name=STRING;
 
 /*
  * Lexer Rules

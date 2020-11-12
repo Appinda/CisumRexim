@@ -38,7 +38,7 @@
 }
 
 /* Dark theme */
-[data-theme="dark"] {
+.App[data-theme="dark"] {
   --white:    #000;
   --gray-100: #212529;
   --gray-200: #343a40;

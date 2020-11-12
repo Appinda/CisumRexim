@@ -2,6 +2,11 @@ import { ConsoleListener } from "./ConsoleListener";
 
 export default class KeyPrinter extends ConsoleListener {
 
+  constructor(parent){
+    super();
+    this.parent = parent;
+  }
+
   exitPlaycommand(ctx) {
     console.log(`playing`);
   }
@@ -13,6 +18,7 @@ export default class KeyPrinter extends ConsoleListener {
   }
   exitSetthemecommand(ctx) {
     console.log(`setting theme to "${ctx.themename.text}".`);
+    this.parent.setState({theme: ctx.themename.text.toLowerCase()});
   }
   
 }

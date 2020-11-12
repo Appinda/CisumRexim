@@ -6,32 +6,34 @@ var grammarFileName = "Console.g4";
 
 
 var serializedATN = ["\u0003\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964",
-    "\u0003\u000e,\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
+    "\u0003\u000f1\u0004\u0002\t\u0002\u0004\u0003\t\u0003\u0004\u0004\t",
     "\u0004\u0004\u0005\t\u0005\u0004\u0006\t\u0006\u0004\u0007\t\u0007\u0004",
-    "\b\t\b\u0003\u0002\u0003\u0002\u0003\u0002\u0005\u0002\u0014\n\u0002",
-    "\u0003\u0002\u0005\u0002\u0017\n\u0002\u0003\u0003\u0003\u0003\u0003",
-    "\u0004\u0003\u0004\u0005\u0004\u001d\n\u0004\u0003\u0005\u0003\u0005",
-    "\u0003\u0005\u0003\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007",
-    "\u0003\u0007\u0003\b\u0003\b\u0003\b\u0003\b\u0003\b\u0002\u0002\t\u0002",
-    "\u0004\u0006\b\n\f\u000e\u0002\u0002\u0002(\u0002\u0013\u0003\u0002",
-    "\u0002\u0002\u0004\u0018\u0003\u0002\u0002\u0002\u0006\u001c\u0003\u0002",
-    "\u0002\u0002\b\u001e\u0003\u0002\u0002\u0002\n\"\u0003\u0002\u0002\u0002",
-    "\f%\u0003\u0002\u0002\u0002\u000e\'\u0003\u0002\u0002\u0002\u0010\u0014",
-    "\u0005\u0004\u0003\u0002\u0011\u0014\u0005\u0006\u0004\u0002\u0012\u0014",
-    "\u0005\f\u0007\u0002\u0013\u0010\u0003\u0002\u0002\u0002\u0013\u0011",
-    "\u0003\u0002\u0002\u0002\u0013\u0012\u0003\u0002\u0002\u0002\u0014\u0016",
-    "\u0003\u0002\u0002\u0002\u0015\u0017\u0007\b\u0002\u0002\u0016\u0015",
-    "\u0003\u0002\u0002\u0002\u0016\u0017\u0003\u0002\u0002\u0002\u0017\u0003",
-    "\u0003\u0002\u0002\u0002\u0018\u0019\u0007\u0003\u0002\u0002\u0019\u0005",
-    "\u0003\u0002\u0002\u0002\u001a\u001d\u0005\b\u0005\u0002\u001b\u001d",
-    "\u0005\n\u0006\u0002\u001c\u001a\u0003\u0002\u0002\u0002\u001c\u001b",
-    "\u0003\u0002\u0002\u0002\u001d\u0007\u0003\u0002\u0002\u0002\u001e\u001f",
-    "\u0007\u0004\u0002\u0002\u001f \u0007\t\u0002\u0002 !\u0007\n\u0002",
-    "\u0002!\t\u0003\u0002\u0002\u0002\"#\u0007\u0004\u0002\u0002#$\u0007",
-    "\u0005\u0002\u0002$\u000b\u0003\u0002\u0002\u0002%&\u0005\u000e\b\u0002",
-    "&\r\u0003\u0002\u0002\u0002\'(\u0007\u0006\u0002\u0002()\u0007\u0007",
-    "\u0002\u0002)*\u0007\u000b\u0002\u0002*\u000f\u0003\u0002\u0002\u0002",
-    "\u0005\u0013\u0016\u001c"].join("");
+    "\b\t\b\u0004\t\t\t\u0003\u0002\u0003\u0002\u0003\u0002\u0005\u0002\u0016",
+    "\n\u0002\u0003\u0002\u0003\u0002\u0003\u0003\u0003\u0003\u0003\u0004",
+    "\u0003\u0004\u0003\u0004\u0005\u0004\u001f\n\u0004\u0003\u0005\u0003",
+    "\u0005\u0003\u0006\u0003\u0006\u0003\u0006\u0003\u0007\u0003\u0007\u0003",
+    "\u0007\u0005\u0007)\n\u0007\u0003\b\u0003\b\u0003\b\u0003\t\u0003\t",
+    "\u0003\t\u0003\t\u0002\u0002\n\u0002\u0004\u0006\b\n\f\u000e\u0010\u0002",
+    "\u0002\u0002,\u0002\u0015\u0003\u0002\u0002\u0002\u0004\u0019\u0003",
+    "\u0002\u0002\u0002\u0006\u001b\u0003\u0002\u0002\u0002\b \u0003\u0002",
+    "\u0002\u0002\n\"\u0003\u0002\u0002\u0002\f%\u0003\u0002\u0002\u0002",
+    "\u000e*\u0003\u0002\u0002\u0002\u0010-\u0003\u0002\u0002\u0002\u0012",
+    "\u0016\u0005\u0004\u0003\u0002\u0013\u0016\u0005\u0006\u0004\u0002\u0014",
+    "\u0016\u0005\f\u0007\u0002\u0015\u0012\u0003\u0002\u0002\u0002\u0015",
+    "\u0013\u0003\u0002\u0002\u0002\u0015\u0014\u0003\u0002\u0002\u0002\u0016",
+    "\u0017\u0003\u0002\u0002\u0002\u0017\u0018\u0007\u0002\u0002\u0003\u0018",
+    "\u0003\u0003\u0002\u0002\u0002\u0019\u001a\u0007\u0003\u0002\u0002\u001a",
+    "\u0005\u0003\u0002\u0002\u0002\u001b\u001e\u0007\u0004\u0002\u0002\u001c",
+    "\u001f\u0005\b\u0005\u0002\u001d\u001f\u0005\n\u0006\u0002\u001e\u001c",
+    "\u0003\u0002\u0002\u0002\u001e\u001d\u0003\u0002\u0002\u0002\u001f\u0007",
+    "\u0003\u0002\u0002\u0002 !\u0007\u0005\u0002\u0002!\t\u0003\u0002\u0002",
+    "\u0002\"#\u0007\n\u0002\u0002#$\u0007\u000b\u0002\u0002$\u000b\u0003",
+    "\u0002\u0002\u0002%(\u0007\u0006\u0002\u0002&)\u0005\u000e\b\u0002\'",
+    ")\u0005\u0010\t\u0002(&\u0003\u0002\u0002\u0002(\'\u0003\u0002\u0002",
+    "\u0002)\r\u0003\u0002\u0002\u0002*+\u0007\u0007\u0002\u0002+,\u0007",
+    "\f\u0002\u0002,\u000f\u0003\u0002\u0002\u0002-.\u0007\b\u0002\u0002",
+    "./\u0007\f\u0002\u0002/\u0011\u0003\u0002\u0002\u0002\u0005\u0015\u001e",
+    "("].join("");
 
 
 var atn = new antlr4.atn.ATNDeserializer().deserialize(serializedATN);
@@ -41,13 +43,13 @@ var decisionsToDFA = atn.decisionToState.map( function(ds, index) { return new a
 var sharedContextCache = new antlr4.PredictionContextCache();
 
 var literalNames = [ null, "'PLAY'", "'STOP'", "'ALL'", "'SET'", "'THEME'", 
-                     "';'" ];
+                     "'SETTING'", "';'" ];
 
-var symbolicNames = [ null, null, null, null, null, null, "ENDING", "OBJ", 
-                      "NUMBER", "STRING", "DIGIT", "LETTER", "WHITESPACE" ];
+var symbolicNames = [ null, null, null, null, null, null, null, "ENDING", 
+                      "OBJ", "NUMBER", "STRING", "DIGIT", "LETTER", "WHITESPACE" ];
 
-var ruleNames =  [ "command", "playcommand", "stopcommand", "stopcuecommand", 
-                   "stopallcommand", "setcommand", "setthemecommand" ];
+var ruleNames =  [ "command", "playcommand", "stopcommand", "stopallcommand", 
+                   "stopcuecommand", "setcommand", "setthemecommand", "setsettingcommand" ];
 
 function ConsoleParser (input) {
 	antlr4.Parser.call(this, input);
@@ -73,21 +75,23 @@ ConsoleParser.T__1 = 2;
 ConsoleParser.T__2 = 3;
 ConsoleParser.T__3 = 4;
 ConsoleParser.T__4 = 5;
-ConsoleParser.ENDING = 6;
-ConsoleParser.OBJ = 7;
-ConsoleParser.NUMBER = 8;
-ConsoleParser.STRING = 9;
-ConsoleParser.DIGIT = 10;
-ConsoleParser.LETTER = 11;
-ConsoleParser.WHITESPACE = 12;
+ConsoleParser.T__5 = 6;
+ConsoleParser.ENDING = 7;
+ConsoleParser.OBJ = 8;
+ConsoleParser.NUMBER = 9;
+ConsoleParser.STRING = 10;
+ConsoleParser.DIGIT = 11;
+ConsoleParser.LETTER = 12;
+ConsoleParser.WHITESPACE = 13;
 
 ConsoleParser.RULE_command = 0;
 ConsoleParser.RULE_playcommand = 1;
 ConsoleParser.RULE_stopcommand = 2;
-ConsoleParser.RULE_stopcuecommand = 3;
-ConsoleParser.RULE_stopallcommand = 4;
+ConsoleParser.RULE_stopallcommand = 3;
+ConsoleParser.RULE_stopcuecommand = 4;
 ConsoleParser.RULE_setcommand = 5;
 ConsoleParser.RULE_setthemecommand = 6;
+ConsoleParser.RULE_setsettingcommand = 7;
 
 
 function CommandContext(parser, parent, invokingState) {
@@ -106,6 +110,10 @@ function CommandContext(parser, parent, invokingState) {
 CommandContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 CommandContext.prototype.constructor = CommandContext;
 
+CommandContext.prototype.EOF = function() {
+    return this.getToken(ConsoleParser.EOF, 0);
+};
+
 CommandContext.prototype.playcommand = function() {
     return this.getTypedRuleContext(PlaycommandContext,0);
 };
@@ -116,10 +124,6 @@ CommandContext.prototype.stopcommand = function() {
 
 CommandContext.prototype.setcommand = function() {
     return this.getTypedRuleContext(SetcommandContext,0);
-};
-
-CommandContext.prototype.ENDING = function() {
-    return this.getToken(ConsoleParser.ENDING, 0);
 };
 
 CommandContext.prototype.enterRule = function(listener) {
@@ -143,35 +147,28 @@ ConsoleParser.prototype.command = function() {
 
     var localctx = new CommandContext(this, this._ctx, this.state);
     this.enterRule(localctx, 0, ConsoleParser.RULE_command);
-    var _la = 0; // Token type
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 17;
+        this.state = 19;
         this._errHandler.sync(this);
         switch(this._input.LA(1)) {
         case ConsoleParser.T__0:
-            this.state = 14;
+            this.state = 16;
             this.playcommand();
             break;
         case ConsoleParser.T__1:
-            this.state = 15;
+            this.state = 17;
             this.stopcommand();
             break;
         case ConsoleParser.T__3:
-            this.state = 16;
+            this.state = 18;
             this.setcommand();
             break;
         default:
             throw new antlr4.error.NoViableAltException(this);
         }
-        this.state = 20;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        if(_la===ConsoleParser.ENDING) {
-            this.state = 19;
-            this.match(ConsoleParser.ENDING);
-        }
-
+        this.state = 21;
+        this.match(ConsoleParser.EOF);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -227,7 +224,7 @@ ConsoleParser.prototype.playcommand = function() {
     this.enterRule(localctx, 2, ConsoleParser.RULE_playcommand);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 22;
+        this.state = 23;
         this.match(ConsoleParser.T__0);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
@@ -260,12 +257,12 @@ function StopcommandContext(parser, parent, invokingState) {
 StopcommandContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
 StopcommandContext.prototype.constructor = StopcommandContext;
 
-StopcommandContext.prototype.stopcuecommand = function() {
-    return this.getTypedRuleContext(StopcuecommandContext,0);
-};
-
 StopcommandContext.prototype.stopallcommand = function() {
     return this.getTypedRuleContext(StopallcommandContext,0);
+};
+
+StopcommandContext.prototype.stopcuecommand = function() {
+    return this.getTypedRuleContext(StopcuecommandContext,0);
 };
 
 StopcommandContext.prototype.enterRule = function(listener) {
@@ -290,23 +287,80 @@ ConsoleParser.prototype.stopcommand = function() {
     var localctx = new StopcommandContext(this, this._ctx, this.state);
     this.enterRule(localctx, 4, ConsoleParser.RULE_stopcommand);
     try {
-        this.state = 26;
+        this.enterOuterAlt(localctx, 1);
+        this.state = 25;
+        this.match(ConsoleParser.T__1);
+        this.state = 28;
         this._errHandler.sync(this);
-        var la_ = this._interp.adaptivePredict(this._input,2,this._ctx);
-        switch(la_) {
-        case 1:
-            this.enterOuterAlt(localctx, 1);
-            this.state = 24;
-            this.stopcuecommand();
-            break;
-
-        case 2:
-            this.enterOuterAlt(localctx, 2);
-            this.state = 25;
+        switch(this._input.LA(1)) {
+        case ConsoleParser.T__2:
+            this.state = 26;
             this.stopallcommand();
             break;
-
+        case ConsoleParser.OBJ:
+            this.state = 27;
+            this.stopcuecommand();
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
         }
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function StopallcommandContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ConsoleParser.RULE_stopallcommand;
+    return this;
+}
+
+StopallcommandContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+StopallcommandContext.prototype.constructor = StopallcommandContext;
+
+
+StopallcommandContext.prototype.enterRule = function(listener) {
+    if(listener instanceof ConsoleListener ) {
+        listener.enterStopallcommand(this);
+	}
+};
+
+StopallcommandContext.prototype.exitRule = function(listener) {
+    if(listener instanceof ConsoleListener ) {
+        listener.exitStopallcommand(this);
+	}
+};
+
+
+
+
+ConsoleParser.StopallcommandContext = StopallcommandContext;
+
+ConsoleParser.prototype.stopallcommand = function() {
+
+    var localctx = new StopallcommandContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 6, ConsoleParser.RULE_stopallcommand);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 30;
+        this.match(ConsoleParser.T__2);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -368,74 +422,13 @@ ConsoleParser.StopcuecommandContext = StopcuecommandContext;
 ConsoleParser.prototype.stopcuecommand = function() {
 
     var localctx = new StopcuecommandContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, ConsoleParser.RULE_stopcuecommand);
-    try {
-        this.enterOuterAlt(localctx, 1);
-        this.state = 28;
-        this.match(ConsoleParser.T__1);
-        this.state = 29;
-        localctx.object = this.match(ConsoleParser.OBJ);
-        this.state = 30;
-        localctx.id = this.match(ConsoleParser.NUMBER);
-    } catch (re) {
-    	if(re instanceof antlr4.error.RecognitionException) {
-	        localctx.exception = re;
-	        this._errHandler.reportError(this, re);
-	        this._errHandler.recover(this, re);
-	    } else {
-	    	throw re;
-	    }
-    } finally {
-        this.exitRule();
-    }
-    return localctx;
-};
-
-
-function StopallcommandContext(parser, parent, invokingState) {
-	if(parent===undefined) {
-	    parent = null;
-	}
-	if(invokingState===undefined || invokingState===null) {
-		invokingState = -1;
-	}
-	antlr4.ParserRuleContext.call(this, parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ConsoleParser.RULE_stopallcommand;
-    return this;
-}
-
-StopallcommandContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
-StopallcommandContext.prototype.constructor = StopallcommandContext;
-
-
-StopallcommandContext.prototype.enterRule = function(listener) {
-    if(listener instanceof ConsoleListener ) {
-        listener.enterStopallcommand(this);
-	}
-};
-
-StopallcommandContext.prototype.exitRule = function(listener) {
-    if(listener instanceof ConsoleListener ) {
-        listener.exitStopallcommand(this);
-	}
-};
-
-
-
-
-ConsoleParser.StopallcommandContext = StopallcommandContext;
-
-ConsoleParser.prototype.stopallcommand = function() {
-
-    var localctx = new StopallcommandContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 8, ConsoleParser.RULE_stopallcommand);
+    this.enterRule(localctx, 8, ConsoleParser.RULE_stopcuecommand);
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 32;
-        this.match(ConsoleParser.T__1);
+        localctx.object = this.match(ConsoleParser.OBJ);
         this.state = 33;
-        this.match(ConsoleParser.T__2);
+        localctx.id = this.match(ConsoleParser.NUMBER);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -471,6 +464,10 @@ SetcommandContext.prototype.setthemecommand = function() {
     return this.getTypedRuleContext(SetthemecommandContext,0);
 };
 
+SetcommandContext.prototype.setsettingcommand = function() {
+    return this.getTypedRuleContext(SetsettingcommandContext,0);
+};
+
 SetcommandContext.prototype.enterRule = function(listener) {
     if(listener instanceof ConsoleListener ) {
         listener.enterSetcommand(this);
@@ -495,7 +492,21 @@ ConsoleParser.prototype.setcommand = function() {
     try {
         this.enterOuterAlt(localctx, 1);
         this.state = 35;
-        this.setthemecommand();
+        this.match(ConsoleParser.T__3);
+        this.state = 38;
+        this._errHandler.sync(this);
+        switch(this._input.LA(1)) {
+        case ConsoleParser.T__4:
+            this.state = 36;
+            this.setthemecommand();
+            break;
+        case ConsoleParser.T__5:
+            this.state = 37;
+            this.setsettingcommand();
+            break;
+        default:
+            throw new antlr4.error.NoViableAltException(this);
+        }
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
@@ -555,12 +566,73 @@ ConsoleParser.prototype.setthemecommand = function() {
     this.enterRule(localctx, 12, ConsoleParser.RULE_setthemecommand);
     try {
         this.enterOuterAlt(localctx, 1);
-        this.state = 37;
-        this.match(ConsoleParser.T__3);
-        this.state = 38;
+        this.state = 40;
         this.match(ConsoleParser.T__4);
-        this.state = 39;
+        this.state = 41;
         localctx.themename = this.match(ConsoleParser.STRING);
+    } catch (re) {
+    	if(re instanceof antlr4.error.RecognitionException) {
+	        localctx.exception = re;
+	        this._errHandler.reportError(this, re);
+	        this._errHandler.recover(this, re);
+	    } else {
+	    	throw re;
+	    }
+    } finally {
+        this.exitRule();
+    }
+    return localctx;
+};
+
+
+function SetsettingcommandContext(parser, parent, invokingState) {
+	if(parent===undefined) {
+	    parent = null;
+	}
+	if(invokingState===undefined || invokingState===null) {
+		invokingState = -1;
+	}
+	antlr4.ParserRuleContext.call(this, parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ConsoleParser.RULE_setsettingcommand;
+    this.name = null; // Token
+    return this;
+}
+
+SetsettingcommandContext.prototype = Object.create(antlr4.ParserRuleContext.prototype);
+SetsettingcommandContext.prototype.constructor = SetsettingcommandContext;
+
+SetsettingcommandContext.prototype.STRING = function() {
+    return this.getToken(ConsoleParser.STRING, 0);
+};
+
+SetsettingcommandContext.prototype.enterRule = function(listener) {
+    if(listener instanceof ConsoleListener ) {
+        listener.enterSetsettingcommand(this);
+	}
+};
+
+SetsettingcommandContext.prototype.exitRule = function(listener) {
+    if(listener instanceof ConsoleListener ) {
+        listener.exitSetsettingcommand(this);
+	}
+};
+
+
+
+
+ConsoleParser.SetsettingcommandContext = SetsettingcommandContext;
+
+ConsoleParser.prototype.setsettingcommand = function() {
+
+    var localctx = new SetsettingcommandContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 14, ConsoleParser.RULE_setsettingcommand);
+    try {
+        this.enterOuterAlt(localctx, 1);
+        this.state = 43;
+        this.match(ConsoleParser.T__5);
+        this.state = 44;
+        localctx.name = this.match(ConsoleParser.STRING);
     } catch (re) {
     	if(re instanceof antlr4.error.RecognitionException) {
 	        localctx.exception = re;
