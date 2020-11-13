@@ -1,3 +1,28 @@
+@mixin scrollbar {
+  /* width */
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    opacity: 0;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, var(--gray-300), rgba(0,0,0,0) 100%);
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(0,0,0,0) 0%, var(--gray-400) 10%, var(--gray-400) 90%, rgba(0,0,0,0) 100%);
+  }
+}
+
 .App {
   display: grid;
   grid-template-areas: 
@@ -70,6 +95,7 @@
     background-color: var(--gray-100);
     .cuelist-container {
       overflow-y: scroll;
+      @include scrollbar();
       height: 100%;
       table {
         width: 100%;
@@ -142,6 +168,7 @@
       padding: 4px .3rem;
       cursor: default;
       color: var(--black);
+      @include scrollbar();
       li {
         span.timestamp {
           font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -181,3 +208,4 @@
 .d-block { display: block }
 .d-inline { display: inline }
 .d-inlineblock { display: inline-block }
+
