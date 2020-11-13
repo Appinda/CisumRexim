@@ -12,6 +12,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    show: false
   });
 
   mainWindow.loadURL(
@@ -22,6 +23,10 @@ function createWindow() {
       slashes: true,
     }),
   );
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show();
+  });
 
   mainWindow.on('closed', () => {
     mainWindow = null;
