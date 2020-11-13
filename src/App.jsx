@@ -11,13 +11,8 @@ export default class App extends React.Component {
     this.state = {
       theme: 'light',
       consoleInput: '',
-      showConsoleHistrory: true,
-      consoleHistory: [
-        {text: "PLAY ALL FROM CUE",     timestamp: new Date("2020-11-12 20:08:03.232") },
-        {text: "PLAY TRACK 5 ON CUE 1", timestamp: new Date("2020-11-12 20:09:51.043") },
-        {text: "WAIT FOR FINISH",       timestamp: new Date("2020-11-12 20:10:35.928") },
-        {text: "STOP ALL",              timestamp: new Date("2020-11-12 20:11:13.124") },
-      ],
+      showConsoleHistrory: false,
+      consoleHistory: [],
       showTimestampInConsole: true,
       showDateInConsole: false, // Not implemented yet
     };
@@ -45,14 +40,8 @@ export default class App extends React.Component {
     // console.log(antlr4.error.ErrorListener)
     const input = this.state.consoleInput.toUpperCase();
     this.clearConsoleInput();
-    await this.appendConsoleHistory({ text: input });
 
     this.commandexecutor.execute(input);
-
-    await this.updateConsoleFromBuffer();
-  }
-  toggleConsoleHistory(){
-    this.setState({showConsoleHistrory: !this.state.showConsoleHistrory})
   }
   getCueList() {
     let result = [];
@@ -104,7 +93,7 @@ export default class App extends React.Component {
         </div>
         {/* Console */}
         <div className="console">
-          <button className={`btn-focus ${this.state.showConsoleHistrory?'active':''}`} onClick={() => this.toggleConsoleHistory()}></button>
+          <button className={`btn-focus ${this.state.showConsoleHistrory?'active':''}`} onClick={() => this.commandexecutor.execute("CONSOLE TOGGLE")}></button>
           <span className="prefix">&gt; </span><input type="text" autoCorrect="off" onKeyDown={(e) => this.onConsoleKeyDown(e)} onChange={(e) => this.onConsoleInputChange(e.target.value)} value={this.state.consoleInput}/>
         </div>
         <div className="playback">
@@ -131,6 +120,7 @@ export default class App extends React.Component {
         </div>
         <div className={`consolehistory ${!this.state.showConsoleHistrory?'d-none':''}`}>
           <ul>
+            <li style={{textDecoration: 'underline'}}>CisumRexim Console</li>
             {this.getConsoleHistory()}
           </ul>
         </div>

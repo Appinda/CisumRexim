@@ -83,39 +83,48 @@ ConsoleListener.prototype.exitSetsettingcommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#expandcommand.
-ConsoleListener.prototype.enterExpandcommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#consoleCommand.
+ConsoleListener.prototype.enterConsoleCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#expandcommand.
-ConsoleListener.prototype.exitExpandcommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#expandconsolecommand.
-ConsoleListener.prototype.enterExpandconsolecommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#expandconsolecommand.
-ConsoleListener.prototype.exitExpandconsolecommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#consoleCommand.
+ConsoleListener.prototype.exitConsoleCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#collapsecommand.
-ConsoleListener.prototype.enterCollapsecommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#consoleExpandCommand.
+ConsoleListener.prototype.enterConsoleExpandCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#collapsecommand.
-ConsoleListener.prototype.exitCollapsecommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#consoleExpandCommand.
+ConsoleListener.prototype.exitConsoleExpandCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#collapseconsolecommand.
-ConsoleListener.prototype.enterCollapseconsolecommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#consoleCollapseCommand.
+ConsoleListener.prototype.enterConsoleCollapseCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#collapseconsolecommand.
-ConsoleListener.prototype.exitCollapseconsolecommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#consoleCollapseCommand.
+ConsoleListener.prototype.exitConsoleCollapseCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#consoleToggleCommand.
+ConsoleListener.prototype.enterConsoleToggleCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#consoleToggleCommand.
+ConsoleListener.prototype.exitConsoleToggleCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#consoleClearCommand.
+ConsoleListener.prototype.enterConsoleClearCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#consoleClearCommand.
+ConsoleListener.prototype.exitConsoleClearCommand = function(ctx) {
 };
 
 

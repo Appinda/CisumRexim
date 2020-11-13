@@ -12,7 +12,9 @@ export default class ConsoleExecutor {
     this.parent = parent;
   }
 
-  execute(input){
+  async execute(input){
+    await this.parent.appendConsoleHistory({ text: input });
+
     const chars = new antlr4.InputStream(input);
     const lexer = new ConsoleLexer(chars);
     const tokens = new antlr4.CommonTokenStream(lexer);
@@ -35,6 +37,8 @@ export default class ConsoleExecutor {
 
     // console.log(antlr4.tree.ParseTreeWalker.DEFAULT);
     tree.accept(new ConsoleVisitor());
+
+    await this.parent.updateConsoleFromBuffer();
   }
 
 }
