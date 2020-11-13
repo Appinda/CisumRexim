@@ -20,5 +20,11 @@ export default class KeyPrinter extends ConsoleListener {
     console.log(`setting theme to "${ctx.themename.text}".`);
     this.parent.setState({theme: ctx.themename.text.toLowerCase()});
   }
+  exitExpandconsolecommand(){
+    this.parent.setState({showConsoleHistrory: true});
+  }
+  exitCollapseconsolecommand(){
+    this.parent.setState({showConsoleHistrory: false});
+  }
   
 }

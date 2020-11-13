@@ -4,7 +4,7 @@ grammar Console;
 /*
  * Parser Rules
  */
-command: (playcommand | stopcommand | setcommand) EOF;
+command: (playcommand | stopcommand | setcommand | expandcommand | collapsecommand) EOF;
 playcommand: 'PLAY';
 stopcommand: 'STOP' (stopallcommand|stopcuecommand);
 stopallcommand: 'ALL';
@@ -12,6 +12,10 @@ stopcuecommand: object=OBJ id=NUMBER;
 setcommand: 'SET' (setthemecommand|setsettingcommand);
 setthemecommand: 'THEME' themename=STRING;
 setsettingcommand: 'SETTING' name=STRING;
+expandcommand: 'EXPAND' expandconsolecommand;
+expandconsolecommand: 'CONSOLE'?;
+collapsecommand: 'COLLAPSE' collapseconsolecommand;
+collapseconsolecommand: 'CONSOLE'?;
 
 /*
  * Lexer Rules

@@ -83,5 +83,41 @@ ConsoleListener.prototype.exitSetsettingcommand = function(ctx) {
 };
 
 
+// Enter a parse tree produced by ConsoleParser#expandcommand.
+ConsoleListener.prototype.enterExpandcommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#expandcommand.
+ConsoleListener.prototype.exitExpandcommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#expandconsolecommand.
+ConsoleListener.prototype.enterExpandconsolecommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#expandconsolecommand.
+ConsoleListener.prototype.exitExpandconsolecommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#collapsecommand.
+ConsoleListener.prototype.enterCollapsecommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#collapsecommand.
+ConsoleListener.prototype.exitCollapsecommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#collapseconsolecommand.
+ConsoleListener.prototype.enterCollapseconsolecommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#collapseconsolecommand.
+ConsoleListener.prototype.exitCollapseconsolecommand = function(ctx) {
+};
+
+
 
 exports.ConsoleListener = ConsoleListener;
