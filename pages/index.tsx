@@ -103,7 +103,7 @@ export default class App extends React.Component {
           </div>
         </div>
         <div className="cell cell4">
-          <div className={`cuelist ${this.state.showConsoleHistrory?'blurred':''}`}>
+          <div className="cuelist">
             <div className="cuelist-container">
               <table cellSpacing="0">
                 <thead>
