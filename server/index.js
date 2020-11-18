@@ -11,6 +11,14 @@ const handle = nextApp.getRequestHandler();
 const { app, BrowserWindow, Menu } = require('electron');
 const appMenu = new (require('./menu'))(isMac);
 
+appMenu.on('newproject', () => {
+  console.log("New project");
+}).on('openproject', () => {
+  console.log("Open project");
+}).on('closeproject', () => {
+  console.log("Close project");
+})
+
 function startElectron() {
   console.log("Starting Electron..");
 

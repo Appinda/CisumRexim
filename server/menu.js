@@ -4,6 +4,11 @@ module.exports = class AppMenu {
   
   constructor(isMac){
     this.isMac = isMac;
+    this.listeners = {
+      newproject: [],
+      openproject: [],
+      closeproject: [],
+    }
   }
 
   get(){
@@ -27,12 +32,9 @@ module.exports = class AppMenu {
       {
         label: 'File',
         submenu: [
-          { id: 'newproject', label: 'New project', click: async () => {
-            console.log("New project");
-          }},
-          { id: 'closeproject', label: 'Close project', click: async () => {
-            console.log("Close project");
-          }},
+          { id: 'newproject', label: 'New project', click: () => this.trigger('newproject') },
+          { id: 'openproject', label: 'Open project..', click: () => this.trigger('openproject')},
+          { id: 'closeproject', label: 'Close project', click: () => this.trigger('closeproject')},
           { type: 'separator' },
           this.isMac ? { role: 'close' } : { role: 'quit' }
         ]
@@ -110,6 +112,21 @@ module.exports = class AppMenu {
         ]
       }
     ]);
+  }
+
+  // Add new listener
+  on(name, fn){
+    if(!this.listeners.hasOwnProperty(name)) throw new Error(`Function with name "${name}" does not exist.`);
+    this.listeners[name].push(fn);
+    return this; // Chaining allowed
+  }
+
+  // private: Trigger event with functions
+  trigger(name, ...args){
+    if(!this.listeners.hasOwnProperty(name)) throw new Error(`Function with name "${name}" does not exist.`);
+    this.listeners[name].forEach(fn => {
+      fn(...args);
+    });
   }
 
 }
