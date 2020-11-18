@@ -3,11 +3,13 @@ const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
+const isMac = process.platform === 'darwin';
+
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
-const { app, BrowserWindow } = require('electron');
-
+const { app, BrowserWindow, Menu } = require('electron');
+const appMenu = new (require('./menu'))(isMac);
 
 function startElectron() {
   console.log("Starting Electron..");
@@ -26,6 +28,9 @@ function startElectron() {
   win.on('ready-to-show', () => {
     win.show();
   });
+
+  Menu.setApplicationMenu(appMenu.get());
+
 }
 
 function startNext(){
@@ -55,7 +60,7 @@ function startNext(){
 app.whenReady().then(startNext);
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  if (!isMac) {
     app.quit()
   }
 });

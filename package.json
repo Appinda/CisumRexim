@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "electron server.js",
+    "dev": "electron server",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production electron server.js"
+    "start": "cross-env NODE_ENV=production electron server"
   },
   "dependencies": {
     "antlr4": "^4.8.0",
