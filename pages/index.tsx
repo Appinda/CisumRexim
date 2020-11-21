@@ -6,13 +6,13 @@ import path from "path";
 
 import ConsoleHistoryWindow, { ConsoleHistoryItem } from "../components/ConsoleHistoryWindow";
 import MixerWindow from "../components/MixerWindow";
+import CommandlineInput from "../components/CommandlineInput";
 import ConsoleExecutor from "../helpers/console";
 import { Project } from '../types/Project';
 import { AudioPlayer } from '../helpers/audio/AudioPlayer';
 
 type AppState = {
   theme: string,
-  consoleInput: string,
   consoleHistory: ConsoleHistoryItem[]
   showTimestampInConsole: boolean
   project: Project,
@@ -32,7 +32,6 @@ export default class App extends React.Component {
   ]
   public state: AppState = {
     theme: 'light',
-    consoleInput: '',
     consoleHistory: [],
     showTimestampInConsole: true,
     project: null,
@@ -83,23 +82,6 @@ export default class App extends React.Component {
     return this.state.project !== null;
   }
 
-  onConsoleInputChange(newvalue) {
-    newvalue = newvalue.toUpperCase();
-    this.setState({ consoleInput: newvalue });
-  }
-  onConsoleKeyDown(e) {
-    if (e.key == "Enter") this.onConsoleSubmit();
-  }
-  clearConsoleInput() {
-    this.setState({ consoleInput: '' });
-  }
-  async onConsoleSubmit() {
-    // console.log(antlr4.error.ErrorListener)
-    const input = this.state.consoleInput.toUpperCase();
-    this.clearConsoleInput();
-
-    this.commandexecutor.execute(input);
-  }
   getCueList() {
     return this.state.project?.cue.map((e, i) => <tr key={i} style={{backgroundColor: e.color}}>
       <td></td>
@@ -124,9 +106,15 @@ export default class App extends React.Component {
     // return new Promise(resolve => this.setState({ consoleHistory: [...this.state.consoleHistory, line] }, resolve))
     if (args.sameLine && this.consoleHistoryBuffer.length > 0) this.consoleHistoryBuffer[this.consoleHistoryBuffer.length - 1].text += ` > ${args.text}`;
     else this.consoleHistoryBuffer.push(line);
+
+    if(args.isError) this.commandexecutor.execute("SHOW CONSOLE");
   }
   scrollConsoleToBottom(){
     this.consoleRef.current.scrollToBottom();
+  }
+
+  onConsoleInput(input: string){
+    this.commandexecutor.execute(input);
   }
 
   async onPlaybackStart(){
@@ -163,10 +151,7 @@ export default class App extends React.Component {
         </div>
         {/* Console */}
         <div className="cell cell2">
-          <div className="console">
-            <button className={`btn-focus ${this.state.currentWindow == 'CONSOLE' ? 'active' : ''}`} onClick={() => this.commandexecutor.execute("SHOW CONSOLE")}></button>
-            <span className="prefix">&gt; </span><input type="text" autoCorrect="off" onKeyDown={(e) => this.onConsoleKeyDown(e)} onChange={(e) => this.onConsoleInputChange(e.target.value)} value={this.state.consoleInput} />
-          </div>
+          <CommandlineInput onSubmit={(input) => this.onConsoleInput(input)}/>
         </div>
         <div className="cell cell3">
           <div className="playback">

@@ -115,10 +115,10 @@ button {
       }
     }
   }
-  .console {
+  .commandlineinput {
     background-color: var(--terminal-background);
     display: grid;
-    grid-template-columns: 24px 16px auto;
+    grid-template-columns: 16px auto;
     * {
       display: inline-block;
     }
