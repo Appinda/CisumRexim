@@ -74,9 +74,6 @@ export default class App extends React.Component {
     return this.state.project !== null;
   }
 
-  onChangeTheme(value) {
-    this.setState({ theme: value });
-  }
   onConsoleInputChange(newvalue) {
     newvalue = newvalue.toUpperCase();
     this.setState({ consoleInput: newvalue });
@@ -141,10 +138,7 @@ export default class App extends React.Component {
       <div className="App" data-theme={this.state.theme}>
         <div className="cell cell1">
           <div className="header">
-            <select className="combo" value={this.state.theme} onChange={(e) => this.onChangeTheme(e.target.value)}>
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
+            
           </div>
         </div>
         {/* Console */}
