@@ -3,9 +3,9 @@ import { Channel } from "./Channel";
 
 export class AudioPlayer {
 
-  private channels: Channel[] = [];
+  public channels: Channel[] = [];
 
-  private getChannel(channelnumber: number): Channel|null {
+  getChannel(channelnumber: number): Channel|null {
     return this.channels[channelnumber];
   }
 

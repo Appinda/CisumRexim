@@ -25,7 +25,7 @@ export default class App extends React.Component {
 
   public commandexecutor: ConsoleExecutor;
   public consoleHistoryBuffer: any[] = [];
-  public audioplayer: AudioPlayer = new AudioPlayer();
+  public audioplayer: AudioPlayer;
   public windows = [
     { id: 'console', icon: 'toolbar_console', name: 'Console History' },
     { id: 'mixer', icon: 'toolbar_mixer', name: 'Audio Mixer' },
@@ -44,6 +44,10 @@ export default class App extends React.Component {
 
   constructor(props){
     super(props);
+    this.audioplayer = new AudioPlayer();
+    this.audioplayer.createChannel();
+    this.audioplayer.createChannel();
+    
     this.consoleRef = React.createRef();
     this.mixerRef = React.createRef();
   }
@@ -183,7 +187,7 @@ export default class App extends React.Component {
             </div>
           </div>
           <ConsoleHistoryWindow show={this.state.currentWindow == 'CONSOLE'} ref={this.consoleRef} history={this.state.consoleHistory} showDate={this.state.showDateInConsole} showTimestamp={this.state.showTimestampInConsole}/>
-          <MixerWindow show={this.state.currentWindow == 'MIXER'} ref={this.mixerRef}/>
+          <MixerWindow show={this.state.currentWindow == 'MIXER'} ref={this.mixerRef} channels={this.audioplayer.channels}/>
         </div>
         <div className="cell cell5">
           <div className="toolbar">

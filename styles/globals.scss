@@ -236,7 +236,23 @@ button {
       }
     }
     &.mixerwindow {
-      
+      height: 100%;
+      .mixer-channel {
+        height: 100%;
+        display: inline-block;
+        border-right: 1px solid black;
+        width: 100px;
+        position: relative;
+        .fader {
+          writing-mode: bt-lr; /* IE */
+          -webkit-appearance: slider-vertical; /* WebKit */
+          position: absolute;
+          left: 40%;
+          bottom: 10px;
+          width: 44px;
+          height: 80%;
+        }
+      }
     }
   }
   .toolbar {
