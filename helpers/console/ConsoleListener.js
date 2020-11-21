@@ -1,4 +1,4 @@
-// Generated from d:\Code Projects\Git\Appinda\CisumRexim\src\console\Console.g4 by ANTLR 4.8
+// Generated from d:\Code Projects\Git\Appinda\CisumRexim\helpers\console\Console.g4 by ANTLR 4.8
 // jshint ignore: start
 var antlr4 = require('antlr4/index');
 
@@ -20,66 +20,93 @@ ConsoleListener.prototype.exitCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#playcommand.
-ConsoleListener.prototype.enterPlaycommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#playCommand.
+ConsoleListener.prototype.enterPlayCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#playcommand.
-ConsoleListener.prototype.exitPlaycommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#stopcommand.
-ConsoleListener.prototype.enterStopcommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#stopcommand.
-ConsoleListener.prototype.exitStopcommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#playCommand.
+ConsoleListener.prototype.exitPlayCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#stopallcommand.
-ConsoleListener.prototype.enterStopallcommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#playTrackCommand.
+ConsoleListener.prototype.enterPlayTrackCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#stopallcommand.
-ConsoleListener.prototype.exitStopallcommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#stopcuecommand.
-ConsoleListener.prototype.enterStopcuecommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#stopcuecommand.
-ConsoleListener.prototype.exitStopcuecommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#playTrackCommand.
+ConsoleListener.prototype.exitPlayTrackCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#setcommand.
-ConsoleListener.prototype.enterSetcommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#playAllCommand.
+ConsoleListener.prototype.enterPlayAllCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#setcommand.
-ConsoleListener.prototype.exitSetcommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#setthemecommand.
-ConsoleListener.prototype.enterSetthemecommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#setthemecommand.
-ConsoleListener.prototype.exitSetthemecommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#playAllCommand.
+ConsoleListener.prototype.exitPlayAllCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#setsettingcommand.
-ConsoleListener.prototype.enterSetsettingcommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#playOnChannelCommand.
+ConsoleListener.prototype.enterPlayOnChannelCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#setsettingcommand.
-ConsoleListener.prototype.exitSetsettingcommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#playOnChannelCommand.
+ConsoleListener.prototype.exitPlayOnChannelCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#stopCommand.
+ConsoleListener.prototype.enterStopCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#stopCommand.
+ConsoleListener.prototype.exitStopCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#stopAllCommand.
+ConsoleListener.prototype.enterStopAllCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#stopAllCommand.
+ConsoleListener.prototype.exitStopAllCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#stopCueCommand.
+ConsoleListener.prototype.enterStopCueCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#stopCueCommand.
+ConsoleListener.prototype.exitStopCueCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#setCommand.
+ConsoleListener.prototype.enterSetCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#setCommand.
+ConsoleListener.prototype.exitSetCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#setThemeCommand.
+ConsoleListener.prototype.enterSetThemeCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#setThemeCommand.
+ConsoleListener.prototype.exitSetThemeCommand = function(ctx) {
+};
+
+
+// Enter a parse tree produced by ConsoleParser#setSettingCommand.
+ConsoleListener.prototype.enterSetSettingCommand = function(ctx) {
+};
+
+// Exit a parse tree produced by ConsoleParser#setSettingCommand.
+ConsoleListener.prototype.exitSetSettingCommand = function(ctx) {
 };
 
 

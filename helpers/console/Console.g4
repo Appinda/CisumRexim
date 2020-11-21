@@ -4,14 +4,17 @@ grammar Console;
 /*
  * Parser Rules
  */
-command: (playcommand | stopcommand | setcommand | consoleCommand) EOF;
-playcommand: 'PLAY';
-stopcommand: 'STOP' (stopallcommand|stopcuecommand);
-stopallcommand: 'ALL';
-stopcuecommand: object=OBJ id=NUMBER;
-setcommand: 'SET' (setthemecommand|setsettingcommand);
-setthemecommand: 'THEME' themename=STRING;
-setsettingcommand: 'SETTING' name=STRING;
+command: (playCommand | stopCommand | setCommand | consoleCommand) EOF;
+playCommand: 'PLAY' (playTrackCommand|playAllCommand); 
+playTrackCommand: 'TRACK' track=NUMBER playOnChannelCommand?;
+playAllCommand: EOF;
+playOnChannelCommand: 'ON' 'CHANNEL' channel=NUMBER;
+stopCommand: 'STOP' (stopAllCommand|stopCueCommand);
+stopAllCommand: 'ALL';
+stopCueCommand: object=OBJ id=NUMBER;
+setCommand: 'SET' (setThemeCommand|setSettingCommand);
+setThemeCommand: 'THEME' themename=STRING;
+setSettingCommand: 'SETTING' name=STRING;
 consoleCommand: 'CONSOLE' (consoleExpandCommand|consoleCollapseCommand|consoleToggleCommand|consoleClearCommand);
 consoleExpandCommand: 'EXPAND';
 consoleCollapseCommand: 'COLLAPSE';

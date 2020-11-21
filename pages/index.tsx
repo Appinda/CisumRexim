@@ -106,11 +106,11 @@ export default class App extends React.Component {
         this.consoleHistoryBuffer = [];
       });
   }
-  appendConsoleHistory({ timestamp, text, isError, sameLine }) {
-    if (timestamp == null) timestamp = new Date();
-    const line = { timestamp, text, isError };
+  appendConsoleHistory(args: { timestamp?, text, isError, sameLine?: boolean }) {
+    if (args.timestamp == null) args.timestamp = new Date();
+    const line = { timestamp: args.timestamp, text: args.text, isError: args.isError };
     // return new Promise(resolve => this.setState({ consoleHistory: [...this.state.consoleHistory, line] }, resolve))
-    if (sameLine && this.consoleHistoryBuffer.length > 0) this.consoleHistoryBuffer[this.consoleHistoryBuffer.length - 1].text += ` > ${text}`;
+    if (args.sameLine && this.consoleHistoryBuffer.length > 0) this.consoleHistoryBuffer[this.consoleHistoryBuffer.length - 1].text += ` > ${args.text}`;
     else this.consoleHistoryBuffer.push(line);
   }
   getConsoleHistory() {
@@ -124,19 +124,16 @@ export default class App extends React.Component {
   }
 
   async onPlaybackStart(){
-    this.commandexecutor.execute("PLAY TRACK 1");
+    this.commandexecutor.execute("PLAY");
     if(!this.isProjectLoaded() || this.state.tracks[0].playing()) return false;
-    /*DEBUG*/ this.state.tracks[0].play();
   }
   onPlaybackStop(){
     this.commandexecutor.execute("STOP ALL");
     if(!this.isProjectLoaded() || !this.state.tracks[0].playing()) return false;
-    /*DEBUG*/ this.state.tracks[0].stop();
   }
   onPlaybackPause(){
     this.commandexecutor.execute("PAUSE");
     if(!this.isProjectLoaded() || !this.state.tracks[0].playing()) return false;
-    /*DEBUG*/ this.state.tracks[0].pause();    
   }
 
   render() {
