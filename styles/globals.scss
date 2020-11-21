@@ -20,6 +20,13 @@ body {
   outline: none;
 }
 
+button {
+  background-color: var(--gray-200);
+  border-color: var(--gray-400);
+  color: var(--black);
+  border-radius: 4px;
+}
+
 
 @mixin scrollbar {
   /* width */
@@ -87,6 +94,17 @@ body {
   }
   .playback {
     background-color: var(--gray-200);
+    padding: .5rem;
+    .playback-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      button {
+        margin: 5px;
+        padding: 1rem 2rem;
+        font-size: 1.5em;
+        border-width: 4px;
+      }
+    }
   }
   .console {
     background-color: var(--terminal-background);

@@ -14,7 +14,8 @@ type AppState = {
   consoleHistory: ConsoleHistoryItem[]
   showTimestampInConsole: boolean
   project: Project,
-  showDateInConsole: boolean
+  showDateInConsole: boolean,
+  tracks: Howl[]
 }
 type ConsoleHistoryItem = {
   timestamp: Date,
@@ -34,6 +35,7 @@ export default class App extends React.Component {
     showTimestampInConsole: true,
     project: null,
     showDateInConsole: false, // Not implemented yet
+    tracks: []
   }
 
   componentDidMount() {
@@ -49,20 +51,21 @@ export default class App extends React.Component {
     project.meta.directory = path.dirname(_path);
     this.loadProject(project);
   }
-
   async loadProject(project: Project){
-    this.setState({project, });
+    this.setState({project});
 
-    let songpath = path.join(project.meta.directory, '/tracks/1. Chevaliers de Sangreal.mp3');
+    let songpath = path.join(this.state.project.meta.directory, '/tracks/', this.state.project.cue[0].src);
     let buffer = await fs.promises.readFile(songpath);
     let blob = new Blob([buffer]);
     let blobURL = URL.createObjectURL(blob);
-    console.log(blobURL);
-    let track1 = new Howl({
+    let track: Howl = new Howl({
       src: [blobURL],
       format: ['mp3']
     });
-    track1.play();
+    this.setState({ tracks: [...this.state.tracks.slice(), track] });
+  }
+  isProjectLoaded(): boolean {
+    return this.state.project !== null;
   }
 
   onChangeTheme(value) {
@@ -120,6 +123,22 @@ export default class App extends React.Component {
     })
   }
 
+  async onPlaybackStart(){
+    this.commandexecutor.execute("PLAY TRACK 1");
+    if(!this.isProjectLoaded() || this.state.tracks[0].playing()) return false;
+    /*DEBUG*/ this.state.tracks[0].play();
+  }
+  onPlaybackStop(){
+    this.commandexecutor.execute("STOP ALL");
+    if(!this.isProjectLoaded() || !this.state.tracks[0].playing()) return false;
+    /*DEBUG*/ this.state.tracks[0].stop();
+  }
+  onPlaybackPause(){
+    this.commandexecutor.execute("PAUSE");
+    if(!this.isProjectLoaded() || !this.state.tracks[0].playing()) return false;
+    /*DEBUG*/ this.state.tracks[0].pause();    
+  }
+
   render() {
     return (
       <div className="App" data-theme={this.state.theme}>
@@ -140,7 +159,11 @@ export default class App extends React.Component {
         </div>
         <div className="cell cell3">
           <div className="playback">
-            P
+            <div className="playback-buttons">
+              <button className="btn-play" onClick={() => this.onPlaybackStart()}>Play</button>
+              <button className="btn-pause" onClick={() => this.onPlaybackPause()}>Pause</button>
+              <button className="btn-stop" onClick={() => this.onPlaybackStop()}>Stop</button>
+            </div>
           </div>
         </div>
         <div className="cell cell4">
