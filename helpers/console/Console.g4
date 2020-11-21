@@ -11,7 +11,7 @@ playAllCommand: EOF;
 playOnChannelCommand: 'ON' 'CHANNEL' channel=NUMBER;
 stopCommand: 'STOP' (stopAllCommand|stopCueCommand);
 stopAllCommand: 'ALL';
-stopCueCommand: object=OBJ id=NUMBER;
+stopCueCommand: OBJ id=NUMBER;
 setCommand: 'SET' (setThemeCommand|setSettingCommand);
 setThemeCommand: 'THEME' themename=STRING;
 setSettingCommand: 'SETTING' name=STRING;
@@ -25,7 +25,7 @@ consoleClearCommand: 'CLEAR';
  * Lexer Rules
  */
 ENDING: ';';
-OBJ: 'CUE' | 'SONG';
+OBJ: 'CHANNEL';
 
 NUMBER: DIGIT+;
 STRING: LETTER+;

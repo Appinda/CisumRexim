@@ -7,6 +7,7 @@ import path from "path";
 import ConsoleHistoryWindow, { ConsoleHistoryItem } from "../components/ConsoleHistoryWindow";
 import ConsoleExecutor from "../helpers/console";
 import { Project } from '../types/Project';
+import { AudioPlayer } from '../helpers/audio/AudioPlayer';
 
 type AppState = {
   theme: string,
@@ -23,6 +24,7 @@ export default class App extends React.Component {
 
   public commandexecutor: ConsoleExecutor;
   public consoleHistoryBuffer: any[] = [];
+  public audioplayer: AudioPlayer = new AudioPlayer();
   public state: AppState = {
     theme: 'light',
     consoleInput: '',
