@@ -37,7 +37,7 @@ export default class ConsoleWindow extends React.Component<Props> {
 
   render(){
     return (
-      <div className={`consolehistory ${this.props.show ? '': 'd-none'}`}>
+      <div className={`window consolehistory ${this.props.show ? '': 'd-none'}`}>
         <ul ref={this.listRef}>
           <li style={{ textDecoration: 'underline' }}>CisumRexim Console</li>
           {this.getConsoleHistory()}

@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 
 import ConsoleHistoryWindow, { ConsoleHistoryItem } from "../components/ConsoleHistoryWindow";
+import MixerWindow from "../components/MixerWindow";
 import ConsoleExecutor from "../helpers/console";
 import { Project } from '../types/Project';
 import { AudioPlayer } from '../helpers/audio/AudioPlayer';
@@ -12,12 +13,12 @@ import { AudioPlayer } from '../helpers/audio/AudioPlayer';
 type AppState = {
   theme: string,
   consoleInput: string,
-  showConsoleHistrory: boolean,
   consoleHistory: ConsoleHistoryItem[]
   showTimestampInConsole: boolean
   project: Project,
   showDateInConsole: boolean,
-  tracks: Howl[]
+  tracks: Howl[],
+  currentWindow: string
 }
 
 export default class App extends React.Component {
@@ -25,21 +26,27 @@ export default class App extends React.Component {
   public commandexecutor: ConsoleExecutor;
   public consoleHistoryBuffer: any[] = [];
   public audioplayer: AudioPlayer = new AudioPlayer();
+  public windows = [
+    { id: 'console', icon: 'toolbar_console', name: 'Console History' },
+    { id: 'mixer', icon: 'toolbar_mixer', name: 'Audio Mixer' },
+  ]
   public state: AppState = {
     theme: 'light',
     consoleInput: '',
-    showConsoleHistrory: false,
     consoleHistory: [],
     showTimestampInConsole: true,
     project: null,
     showDateInConsole: false, // Not implemented yet
-    tracks: []
+    tracks: [],
+    currentWindow: 'cue'
   }
   private consoleRef: React.RefObject<ConsoleHistoryWindow>;
+  private mixerRef: React.RefObject<MixerWindow>;
 
   constructor(props){
     super(props);
     this.consoleRef = React.createRef();
+    this.mixerRef = React.createRef();
   }
 
   componentDidMount() {
@@ -135,6 +142,17 @@ export default class App extends React.Component {
     if(!this.isProjectLoaded() || !this.state.tracks[0].playing()) return false;
   }
 
+  showWindow(id: string): void {
+    this.commandexecutor.execute("SHOW " + id.toUpperCase());
+  }
+  getToolbarItems(): JSX.Element[] {
+    return this.windows.map((e, i) => <button key={i} style={{backgroundImage: this.getIconPath(e.icon)}} title={e.name} onClick={() => this.showWindow(e.id)}></button>);
+  }
+
+  getIconPath(name: string): string{
+    return `url(/assets/icons/${this.state.theme}/${name}.svg)`;
+  }
+
   render() {
     return (
       <div className="App" data-theme={this.state.theme}>
@@ -146,7 +164,7 @@ export default class App extends React.Component {
         {/* Console */}
         <div className="cell cell2">
           <div className="console">
-            <button className={`btn-focus ${this.state.showConsoleHistrory ? 'active' : ''}`} onClick={() => this.commandexecutor.execute("CONSOLE TOGGLE")}></button>
+            <button className={`btn-focus ${this.state.currentWindow == 'CONSOLE' ? 'active' : ''}`} onClick={() => this.commandexecutor.execute("SHOW CONSOLE")}></button>
             <span className="prefix">&gt; </span><input type="text" autoCorrect="off" onKeyDown={(e) => this.onConsoleKeyDown(e)} onChange={(e) => this.onConsoleInputChange(e.target.value)} value={this.state.consoleInput} />
           </div>
         </div>
@@ -179,7 +197,13 @@ export default class App extends React.Component {
               </table>
             </div>
           </div>
-          <ConsoleHistoryWindow show={this.state.showConsoleHistrory} ref={this.consoleRef} history={this.state.consoleHistory} showDate={this.state.showDateInConsole} showTimestamp={this.state.showTimestampInConsole}/>
+          <ConsoleHistoryWindow show={this.state.currentWindow == 'CONSOLE'} ref={this.consoleRef} history={this.state.consoleHistory} showDate={this.state.showDateInConsole} showTimestamp={this.state.showTimestampInConsole}/>
+          <MixerWindow show={this.state.currentWindow == 'MIXER'} ref={this.mixerRef}/>
+        </div>
+        <div className="cell cell5">
+          <div className="toolbar">
+            {this.getToolbarItems()}
+          </div>
         </div>
       </div>
     );

@@ -1,6 +1,9 @@
 @import './colors.css';
 @import './fonts.css';
 
+$toolbar-height: 30px;
+$toolbar-padding: 6px;
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -15,9 +18,9 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-}
-*:focus {
-  outline: none;
+  &:focus {
+    outline: none;
+  }
 }
 
 button {
@@ -25,6 +28,7 @@ button {
   border-color: var(--gray-400);
   color: var(--black);
   border-radius: 4px;
+  cursor: pointer;
 }
 
 
@@ -58,9 +62,10 @@ button {
   grid-template-areas: 
   "cell1 cell3"
   "cell2 cell3"
-  "cell4 cell3";
+  "cell4 cell3"
+  "cell5 cell5";
   grid-template-columns: minmax(400px, 1fr) minmax(200px, 400px);
-  grid-template-rows: 150px auto 1fr;
+  grid-template-rows: 150px auto 1fr ($toolbar-height + ($toolbar-padding * 2));
   height: 100vh;
   color: var(--black);
 
@@ -85,6 +90,10 @@ button {
     &.cell4 {
       grid-area: cell4;
       z-index: 20;
+    }
+    &.cell5 {
+      grid-area: cell5;
+      z-index: 30;
     }
   }
   .header {
@@ -189,38 +198,70 @@ button {
       }
     }
   }
-  .consolehistory {
+  .window {
     height: 100%;
     background-color: var(--gray-100);
     position: absolute;
     left: 0;
     top: 0;
-    opacity: 0.9;
-    backdrop-filter: blur(5px);
-    ul {
-      list-style-type: none;
-      display: block;
-      margin-top: auto;
-      height: 100%;
-      overflow-y: scroll;
-      font-family: DroidSansMono;
-      padding: 4px .3rem;
-      cursor: default;
-      color: var(--black);
-      @include scrollbar();
-      li {
-        span.timestamp {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          margin-right: 8px;
-          color: var(--gray-500);
-          transition: color 30ms;
+
+    &.consolehistory {
+      opacity: 0.9;
+      backdrop-filter: blur(5px);
+      ul {
+        list-style-type: none;
+        display: block;
+        margin-top: auto;
+        height: 100%;
+        overflow-y: scroll;
+        font-family: DroidSansMono;
+        padding: 4px .3rem;
+        cursor: default;
+        color: var(--black);
+        @include scrollbar();
+        li {
+          span.timestamp {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin-right: 8px;
+            color: var(--gray-500);
+            transition: color 30ms;
+          }
+          span.error {
+            color: red;
+          }
+          &:hover span.timestamp {
+            color: var(--gray-900);
+          }
         }
-        span.error {
-          color: red;
-        }
-        &:hover span.timestamp {
-          color: var(--gray-900);
-        }
+      }
+    }
+    &.mixerwindow {
+      
+    }
+  }
+  .toolbar {
+    background-color: var(--gray-200);
+    border-top: 1px solid var(--gray-400);
+    > * {
+      display: inline-block;
+    }
+    button {
+      background-color: transparent;
+      border: none;
+      width: $toolbar-height + ($toolbar-padding * 2);
+      height: $toolbar-height + ($toolbar-padding * 2);
+      padding: $toolbar-padding;
+      border-radius: 0;
+      background-size: 70% 70%;
+      background-repeat: no-repeat;
+      background-position: center;
+      > svg {
+        
+        background-color: red;
+        margin-right: 10px;
+      }
+      &:active {
+        background-color: var(--gray-400);
       }
     }
   }
@@ -233,7 +274,6 @@ button {
     height: 20px;
     margin-top: 5px;
     margin-left: 3px;
-    cursor: pointer;
     &.active {
       border-style: inset;
     }

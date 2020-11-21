@@ -43,16 +43,12 @@ export default class KeyPrinter extends ConsoleListener {
     this.log(`setting theme to "${ctx.themename.text}".`);
     this.parent.setState({theme: ctx.themename.text.toLowerCase()});
   }
-  exitConsoleExpandCommand(){
-    this.parent.setState({showConsoleHistrory: true});
+  
+  exitShowCommand(ctx){
+    this.parent.setState({currentWindow: ctx.window.text });
   }
-  exitConsoleCollapseCommand(){
-    this.parent.setState({showConsoleHistrory: false});
-  }
-  exitConsoleToggleCommand(){
-    this.parent.setState({showConsoleHistrory: !this.parent.state.showConsoleHistrory});
-  }
-  exitConsoleClearCommand(){
+
+  exitClearCommand(){
     this.parent.setState({consoleHistory: []});
   }
   

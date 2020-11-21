@@ -110,48 +110,21 @@ ConsoleListener.prototype.exitSetSettingCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#consoleCommand.
-ConsoleListener.prototype.enterConsoleCommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#clearCommand.
+ConsoleListener.prototype.enterClearCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#consoleCommand.
-ConsoleListener.prototype.exitConsoleCommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#consoleExpandCommand.
-ConsoleListener.prototype.enterConsoleExpandCommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#consoleExpandCommand.
-ConsoleListener.prototype.exitConsoleExpandCommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#clearCommand.
+ConsoleListener.prototype.exitClearCommand = function(ctx) {
 };
 
 
-// Enter a parse tree produced by ConsoleParser#consoleCollapseCommand.
-ConsoleListener.prototype.enterConsoleCollapseCommand = function(ctx) {
+// Enter a parse tree produced by ConsoleParser#showCommand.
+ConsoleListener.prototype.enterShowCommand = function(ctx) {
 };
 
-// Exit a parse tree produced by ConsoleParser#consoleCollapseCommand.
-ConsoleListener.prototype.exitConsoleCollapseCommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#consoleToggleCommand.
-ConsoleListener.prototype.enterConsoleToggleCommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#consoleToggleCommand.
-ConsoleListener.prototype.exitConsoleToggleCommand = function(ctx) {
-};
-
-
-// Enter a parse tree produced by ConsoleParser#consoleClearCommand.
-ConsoleListener.prototype.enterConsoleClearCommand = function(ctx) {
-};
-
-// Exit a parse tree produced by ConsoleParser#consoleClearCommand.
-ConsoleListener.prototype.exitConsoleClearCommand = function(ctx) {
+// Exit a parse tree produced by ConsoleParser#showCommand.
+ConsoleListener.prototype.exitShowCommand = function(ctx) {
 };
 
 

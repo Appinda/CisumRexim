@@ -4,7 +4,7 @@ grammar Console;
 /*
  * Parser Rules
  */
-command: (playCommand | stopCommand | setCommand | consoleCommand) EOF;
+command: (playCommand | stopCommand | setCommand | clearCommand | showCommand) EOF;
 playCommand: 'PLAY' (playTrackCommand|playAllCommand); 
 playTrackCommand: 'TRACK' track=NUMBER playOnChannelCommand?;
 playAllCommand: EOF;
@@ -15,17 +15,15 @@ stopCueCommand: OBJ id=NUMBER;
 setCommand: 'SET' (setThemeCommand|setSettingCommand);
 setThemeCommand: 'THEME' themename=STRING;
 setSettingCommand: 'SETTING' name=STRING;
-consoleCommand: 'CONSOLE' (consoleExpandCommand|consoleCollapseCommand|consoleToggleCommand|consoleClearCommand);
-consoleExpandCommand: 'EXPAND';
-consoleCollapseCommand: 'COLLAPSE';
-consoleToggleCommand: 'TOGGLE';
-consoleClearCommand: 'CLEAR';
+clearCommand: 'CLEAR';
+showCommand: 'SHOW' (window=WINDOW)+;
 
 /*
  * Lexer Rules
  */
 ENDING: ';';
 OBJ: 'CHANNEL';
+WINDOW: 'CONSOLE'|'MIXER';
 
 NUMBER: DIGIT+;
 STRING: LETTER+;
