@@ -37,12 +37,22 @@ export default class App extends React.Component {
     showDateInConsole: false, // Not implemented yet
     tracks: []
   }
+  private consoleRef: React.RefObject<HTMLUListElement>;
+
+  constructor(props){
+    super(props);
+    this.consoleRef = React.createRef();
+  }
 
   componentDidMount() {
     this.commandexecutor = new ConsoleExecutor(this);
     ipcRenderer.on('openproject', (event, _path) => {
       this.openProject(_path);
     });
+  }
+
+  componentDidUpdate(){
+    this.scrollConsoleToBottom();
   }
 
   async openProject(_path: string): Promise<void> {
@@ -122,6 +132,9 @@ export default class App extends React.Component {
         </li>);
     })
   }
+  scrollConsoleToBottom(){
+    this.consoleRef.current.scrollTo(0, this.consoleRef.current.scrollHeight + 20);
+  }
 
   async onPlaybackStart(){
     this.commandexecutor.execute("PLAY");
@@ -184,7 +197,7 @@ export default class App extends React.Component {
             </div>
           </div>
           <div className={`consolehistory ${!this.state.showConsoleHistrory ? 'd-none' : ''}`}>
-            <ul>
+            <ul ref={this.consoleRef}>
               <li style={{ textDecoration: 'underline' }}>CisumRexim Console</li>
               {this.getConsoleHistory()}
             </ul>
