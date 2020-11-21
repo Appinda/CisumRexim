@@ -4,6 +4,7 @@ import { Howl } from "howler";
 import fs from "fs";
 import path from "path";
 
+import ConsoleHistoryWindow, { ConsoleHistoryItem } from "../components/ConsoleHistoryWindow";
 import ConsoleExecutor from "../helpers/console";
 import { Project } from '../types/Project';
 
@@ -16,11 +17,6 @@ type AppState = {
   project: Project,
   showDateInConsole: boolean,
   tracks: Howl[]
-}
-type ConsoleHistoryItem = {
-  timestamp: Date,
-  text: string,
-  isError: boolean
 }
 
 export default class App extends React.Component {
@@ -37,7 +33,7 @@ export default class App extends React.Component {
     showDateInConsole: false, // Not implemented yet
     tracks: []
   }
-  private consoleRef: React.RefObject<HTMLUListElement>;
+  private consoleRef: React.RefObject<ConsoleHistoryWindow>;
 
   constructor(props){
     super(props);
@@ -123,17 +119,8 @@ export default class App extends React.Component {
     if (args.sameLine && this.consoleHistoryBuffer.length > 0) this.consoleHistoryBuffer[this.consoleHistoryBuffer.length - 1].text += ` > ${args.text}`;
     else this.consoleHistoryBuffer.push(line);
   }
-  getConsoleHistory() {
-    if (this.state.showDateInConsole == false) console.warn("showDateInConsole = false functionality has not been implemented yet");
-    return this.state.consoleHistory.map((line, i) => {
-      return (
-        <li key={i}>
-          {this.state.showTimestampInConsole && !line.isError && <span className="timestamp">[{line.timestamp.toJSON().replace(/T/g, ' ').replace(/Z/g, '')}]&nbsp;</span>}<span className={`message ${line.isError ? 'error' : ''}`}>{line.isError && "> "}{line.text}</span>
-        </li>);
-    })
-  }
   scrollConsoleToBottom(){
-    this.consoleRef.current.scrollTo(0, this.consoleRef.current.scrollHeight + 20);
+    this.consoleRef.current.scrollToBottom();
   }
 
   async onPlaybackStart(){
@@ -196,12 +183,7 @@ export default class App extends React.Component {
               </table>
             </div>
           </div>
-          <div className={`consolehistory ${!this.state.showConsoleHistrory ? 'd-none' : ''}`}>
-            <ul ref={this.consoleRef}>
-              <li style={{ textDecoration: 'underline' }}>CisumRexim Console</li>
-              {this.getConsoleHistory()}
-            </ul>
-          </div>
+          <ConsoleHistoryWindow show={this.state.showConsoleHistrory} ref={this.consoleRef} history={this.state.consoleHistory} showDate={this.state.showDateInConsole} showTimestamp={this.state.showTimestampInConsole}/>
         </div>
       </div>
     );
