@@ -1,23 +1,68 @@
 import React from 'react';
+import { ipcRenderer } from 'electron';
+import { Howl } from "howler";
+import fs from "fs";
+import path from "path";
 
 import ConsoleExecutor from "../helpers/console";
+import { Project } from '../types/Project';
+
+type AppState = {
+  theme: string,
+  consoleInput: string,
+  showConsoleHistrory: boolean,
+  consoleHistory: ConsoleHistoryItem[]
+  showTimestampInConsole: boolean
+  project: Project,
+  showDateInConsole: boolean
+}
+type ConsoleHistoryItem = {
+  timestamp: Date,
+  text: string,
+  isError: boolean
+}
 
 export default class App extends React.Component {
 
   public commandexecutor: ConsoleExecutor;
   public consoleHistoryBuffer: any[] = [];
-  public state = {
+  public state: AppState = {
     theme: 'light',
     consoleInput: '',
     showConsoleHistrory: false,
     consoleHistory: [],
     showTimestampInConsole: true,
+    project: null,
     showDateInConsole: false, // Not implemented yet
   }
 
   componentDidMount() {
     this.commandexecutor = new ConsoleExecutor(this);
-    // this.commandexecutor.changeTheme.call(this);
+    ipcRenderer.on('openproject', (event, _path) => {
+      this.openProject(_path);
+    });
+  }
+
+  async openProject(_path: string): Promise<void> {
+    let project: Project = JSON.parse(await fs.promises.readFile(_path, { encoding: 'utf-8' }));
+    project.meta.path = _path;
+    project.meta.directory = path.dirname(_path);
+    this.loadProject(project);
+  }
+
+  async loadProject(project: Project){
+    this.setState({project, });
+
+    let songpath = path.join(project.meta.directory, '/tracks/1. Chevaliers de Sangreal.mp3');
+    let buffer = await fs.promises.readFile(songpath);
+    let blob = new Blob([buffer]);
+    let blobURL = URL.createObjectURL(blob);
+    console.log(blobURL);
+    let track1 = new Howl({
+      src: [blobURL],
+      format: ['mp3']
+    });
+    track1.play();
   }
 
   onChangeTheme(value) {
@@ -41,18 +86,14 @@ export default class App extends React.Component {
     this.commandexecutor.execute(input);
   }
   getCueList() {
-    let result = [];
-    for (let i = 0; i < 10; i++) {
-      result.push(<tr key={i}>
-        <td></td>
-        <td>{i}</td>
-        <td>Careless Whisper</td>
-        <td>00:00.00</td>
-        <td>00:22.80</td>
-        <td>00:00.00</td>
-      </tr>);
-    }
-    return result;
+    return this.state.project?.cue.map((e, i) => <tr key={i} style={{backgroundColor: e.color}}>
+      <td></td>
+      <td>{i}</td>
+      <td>name</td>
+      <td>{e.preDelay}</td>
+      <td>00:22.80</td>
+      <td>{e.postDelay}</td>
+    </tr>);
   }
   updateConsoleFromBuffer() {
     return new Promise(resolve => {
@@ -111,9 +152,9 @@ export default class App extends React.Component {
                     <th></th>
                     <th className="w-auto">#</th>
                     <th>Cue</th>
-                    <th className="w-auto p-2">Pre wait</th>
+                    <th className="w-auto p-2">Pre delay</th>
                     <th className="w-auto p-2">Action</th>
-                    <th className="w-auto p-2">Post wait</th>
+                    <th className="w-auto p-2">Post delay</th>
                   </tr>
                 </thead>
                 <tbody>

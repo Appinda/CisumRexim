@@ -2,22 +2,22 @@ const { createServer } = require('http');
 const { parse } = require('url');
 const next = require('next');
 
+const fs = require('fs');
+const path = require('path');
+
 const dev = process.env.NODE_ENV !== 'production';
 const isMac = process.platform === 'darwin';
 
 const nextApp = next({ dev });
 const handle = nextApp.getRequestHandler();
 
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, dialog, ipcMain } = require('electron');
 const appMenu = new (require('./menu'))(isMac);
 
-appMenu.on('newproject', () => {
-  console.log("New project");
-}).on('openproject', () => {
-  console.log("Open project");
-}).on('closeproject', () => {
-  console.log("Close project");
-})
+ipcMain.on('test', (event) => {
+  console.log("testing!");
+  event.reply('test', 'back')
+});
 
 function startElectron() {
   console.log("Starting Electron..");
@@ -30,6 +30,7 @@ function startElectron() {
     },
     show: false
   });
+  
 
   win.loadURL('http://localhost:3000');
   
@@ -37,6 +38,19 @@ function startElectron() {
     win.show();
   });
 
+  appMenu.on('newproject', () => {
+    console.log("New project");
+  }).on('openproject', async () => {
+    // Open file
+    let result = await dialog.showOpenDialog(win, {title: "Open project", properties: ['openFile'], filters: {name: 'CisumRexim Project', extensions: ['json']}});
+    if(result.canceled) return false;
+    let projectpath = result.filePaths[0];
+    win.webContents.send('openproject', projectpath);
+
+    return true;
+  }).on('closeproject', () => {
+    console.log("Close project");
+  })
   Menu.setApplicationMenu(appMenu.get());
 
 }
