@@ -106,9 +106,9 @@ export default class App extends React.Component {
         this.consoleHistoryBuffer = [];
       });
   }
-  appendConsoleHistory(args: { timestamp?, text, isError, sameLine?: boolean }) {
+  appendConsoleHistory(args: { timestamp?, text, isError?, sameLine?: boolean }) {
     if (args.timestamp == null) args.timestamp = new Date();
-    const line = { timestamp: args.timestamp, text: args.text, isError: args.isError };
+    const line = { timestamp: args.timestamp, text: args.text, isError: args.isError||false };
     // return new Promise(resolve => this.setState({ consoleHistory: [...this.state.consoleHistory, line] }, resolve))
     if (args.sameLine && this.consoleHistoryBuffer.length > 0) this.consoleHistoryBuffer[this.consoleHistoryBuffer.length - 1].text += ` > ${args.text}`;
     else this.consoleHistoryBuffer.push(line);

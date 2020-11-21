@@ -1,8 +1,11 @@
+import App from "../../pages";
 import { ConsoleListener } from "./ConsoleListener";
 
 export default class KeyPrinter extends ConsoleListener {
 
-  constructor(parent){
+  private parent: App;
+
+  constructor(parent: App){
     super();
     this.parent = parent;
   }
