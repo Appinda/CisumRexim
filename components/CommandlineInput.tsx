@@ -24,14 +24,26 @@ export default class CommandlineInput extends React.Component<Props> {
     this.inputEl = React.createRef<HTMLInputElement>();
   }
 
+  /**
+   * Event triggered when input text changed.
+   * @param {string} newvalue - New value of the input.
+   */
   private onConsoleInputChange(newvalue: string): void {
     this.setInput(newvalue);
   }
 
+  /**
+   * Set input state after formatting it correctly.
+   * @param {string} text - New input value.
+   */
   private setInput(text: string): void {
     this.setState({ input: text.toUpperCase() });
   }
 
+  /**
+   * @event
+   * @param e 
+   */
   private onConsoleKeyDown(e): void {
     if (e.key == "Enter") this.onConsoleSubmit();
     else if (e.key == "ArrowUp") this.loadPreviousCommand(1);

@@ -13,3 +13,4 @@ Design and development by Maarten Verheul.
 - `yarn run dev` to start development.
 - `yarn run build` to build the application.
 - `yarn run start` to start the built application.
+- `yarn run generate:docs` to generate TypeDoc documentation.
